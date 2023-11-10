@@ -1,19 +1,19 @@
-package classiDiGestione;
+package magazzino;
 
 import java.util.ArrayList;
 
 public class Magazzino {
-        private ArrayList<Prodotto> magazzino;
+    private ArrayList<Prodotto> magazzino;
 
-        public Magazzino(ArrayList<Prodotto> magazzino) {
-            this.magazzino = magazzino;
-        }
+    public Magazzino(ArrayList<Prodotto> magazzino) {
+        this.magazzino = magazzino;
+    }
 
-        public ArrayList<Prodotto> getMagazzino() {
-            return magazzino;
-        }
+    public ArrayList<Prodotto> getMagazzino() {
+        return magazzino;
+    }
 
-        public void setMagazzino(ArrayList<Prodotto> magazzino) {
-            this.magazzino = magazzino;
-        }
+    public void setMagazzino(ArrayList<Prodotto> magazzino) {
+        this.magazzino = magazzino;
+    }
 }

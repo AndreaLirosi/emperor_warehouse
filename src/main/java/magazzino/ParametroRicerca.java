@@ -1,4 +1,4 @@
-package classiDiGestione;
+package magazzino;
 
 public enum ParametroRicerca {
     PRODUTTORE,

@@ -3,7 +3,7 @@ package carrello;
 import java.util.ArrayList;
 
 public class Carrello {
-    private ArrayList <Prodotto> prodottiNelCarrello;
+    private ArrayList<Prodotto> prodottiNelCarrello;
 
     public Carrello(ArrayList<Prodotto> prodottiNelCarrello) {
         this.prodottiNelCarrello = prodottiNelCarrello;
