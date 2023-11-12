@@ -3,6 +3,7 @@ package carrello;
 import magazzino.Magazzino;
 import magazzino.MagazzinoUtil;
 import prodotto.Prodotto;
+import java.util.ArrayList;
 
 
 public class CarrelloUtil {
