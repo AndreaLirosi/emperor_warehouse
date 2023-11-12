@@ -1,5 +1,7 @@
 package magazzino;
 
+import prodotto.Prodotto;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
@@ -23,7 +25,7 @@ public class MagazzinoUtil {
         }
     }
 
-    public static ArrayList<Prodotto> cercaProdotti(Magazzino magazzino, ParametroRicerca parametro, String ricerca) {
+    public static ArrayList<Prodotto.Prodotto> cercaProdotti(Magazzino magazzino, ParametroRicerca parametro, String ricerca) {
         return switch (parametro) {
             case PRODUTTORE -> ricercaPerProduttore(magazzino, ricerca);
             case MODELLO -> ricercaPerModello(magazzino, ricerca);

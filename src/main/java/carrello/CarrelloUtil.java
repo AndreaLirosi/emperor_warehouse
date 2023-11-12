@@ -2,6 +2,7 @@ package carrello;
 
 import magazzino.Magazzino;
 import magazzino.MagazzinoUtil;
+import prodotto.Prodotto;
 
 
 public class CarrelloUtil {
