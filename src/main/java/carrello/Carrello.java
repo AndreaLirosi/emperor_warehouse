@@ -1,5 +1,7 @@
 package carrello;
 
+import prodotto.Prodotto;
+
 import java.util.ArrayList;
 
 public class Carrello {
