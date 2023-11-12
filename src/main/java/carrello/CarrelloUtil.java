@@ -3,7 +3,6 @@ package carrello;
 import magazzino.Magazzino;
 import magazzino.MagazzinoUtil;
 
-import java.util.ArrayList;
 
 public class CarrelloUtil {
     public static boolean addProdottoACarrello(Carrello carrello, Prodotto prodotto, Magazzino magazzino) {
