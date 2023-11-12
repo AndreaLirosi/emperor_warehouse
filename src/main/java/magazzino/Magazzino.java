@@ -1,5 +1,7 @@
 package magazzino;
 
+import prodotto.Prodotto;
+
 import java.util.ArrayList;
 
 public class Magazzino {
