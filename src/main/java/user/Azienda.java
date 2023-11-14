@@ -19,7 +19,12 @@ public class Azienda extends Utente {
 
     @Override
     public String toString() {
-        return "Azienda{" +
+        return "Utente{" +
+                "name='" + getName() + '\'' +
+                ", surname='" + getSurname()+ '\'' +
+                ", email='" + getEmail() + '\'' +
+                ", password='" + getPassword() + '\'' +
+                "Azienda{" +
                 "societyName='" + societyName + '\'' +
                 '}';
     }
