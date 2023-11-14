@@ -12,7 +12,7 @@ public class Main {
 
         builder.setName("Luca");
         builder.setSurname("Savini");
-        builder.setEmail("SaviniLucaredeRomaplusultra@gmail.ermejo");
+        builder.setEmail("SaviniLucaredeRomaplusultra@diomail.ermejo");
         builder.setPassword("iosoioevoinonsieteuncazzo");
         builder.setSpesa(new Carrello());
 
