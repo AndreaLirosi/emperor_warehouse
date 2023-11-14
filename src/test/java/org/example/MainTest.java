@@ -1,6 +1,6 @@
 package org.example;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class MainTest {
 
