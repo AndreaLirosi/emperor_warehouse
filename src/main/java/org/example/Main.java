@@ -8,8 +8,6 @@ public class Main {
 
     public static void main(String[] args) {
 
-
-<<<<<<< HEAD
         PrivatoBuilder builder = new PrivatoBuilder();
 
         builder.setName("Luca");
@@ -22,8 +20,6 @@ public class Main {
 
 
         System.out.println(utenteLuca2);
-=======
 
->>>>>>> fe09a708102eec864b634e57f02628fb2376af08
     }
 }
