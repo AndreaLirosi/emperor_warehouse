@@ -8,8 +8,8 @@ public class Main {
 
     public static void main(String[] args) {
 
-
         PrivatoBuilder builder = new PrivatoBuilder();
+
         builder.setName("Luca");
         builder.setSurname("Savini");
         builder.setEmail("SaviniLucaredeRomaplusultra@diomail.ermejo");
@@ -20,5 +20,6 @@ public class Main {
 
 
         System.out.println(utenteLuca2);
+
     }
 }
