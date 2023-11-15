@@ -23,6 +23,9 @@ public class Azienda extends Utente {
         return societyName;
     }
 
+    public Magazzino getMagazzino() {
+        return magazzino;
+    }
 
     @Override
     public String toString() {
