@@ -19,7 +19,7 @@ class CarrelloUtilTest {
     Carrello carrello_null = null;
     Magazzino magazzino_null = null;
     Smartphone prodotto_presente = new Smartphone("Samsung", "S3", "ma che ne so", 2, "poca", BigDecimal.valueOf(213.55), BigDecimal.valueOf(549.99), "SMRTP-01");
-    Smartphone prodotto_non_presente = new Smartphone("Huawei", "M8", "ma che ne so", 1, "un po' di più", BigDecimal.valueOf(213.55), BigDecimal.valueOf(549.99), "SMRTP-02");
+    Smartphone prodotto_non_presente = new Smartphone("Huawei", "M8", "ma che ne so", 1, "un po' di più", BigDecimal.valueOf(213.55), BigDecimal.valueOf(0.99), "SMRTP-02");
     Carrello carrello = new Carrello();
     Magazzino magazzino = new Magazzino(new ArrayList<Prodotto>());
 
@@ -203,6 +203,23 @@ class CarrelloUtilTest {
     void fineSpesaRimozioneArticoli_carrello_eMagazzino_Null() {
         Exception e = assertThrows(NullPointerException.class, () -> CarrelloUtil.fineSpesaRimozioneArticoli(carrello_null,magazzino_null));
         assertEquals("Il magazzino e carrello sono null", e.getMessage());
+        assertEquals(NullPointerException.class, e.getClass());
+    }
+    @Test
+    void totaleSpesaCarrello(){
+        carrello.getProdottiNelCarrello().add(prodotto_presente);
+        carrello.getProdottiNelCarrello().add(prodotto_non_presente);
+        assertEquals(BigDecimal.valueOf(550.98),CarrelloUtil.totaleSpesaCarrello(carrello),"Dovrebbe restituire l'ammontare del valore della spesa");
+    }
+    @Test
+    void totaleSpesaCarrello_senza_prodotti(){
+        assertEquals(BigDecimal.valueOf(0),CarrelloUtil.totaleSpesaCarrello(carrello),"Dovrebbe restituire 0");
+    }
+
+    @Test
+    void totaleSpesaCarrello_carrelloNull() {
+        Exception e = assertThrows(NullPointerException.class, () -> CarrelloUtil.totaleSpesaCarrello(carrello_null));
+        assertEquals("Il carrello è null", e.getMessage());
         assertEquals(NullPointerException.class, e.getClass());
     }
 }

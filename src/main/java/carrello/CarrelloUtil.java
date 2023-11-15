@@ -3,6 +3,8 @@ package carrello;
 import magazzino.Magazzino;
 import magazzino.MagazzinoUtil;
 import prodotto.Prodotto;
+
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 
@@ -72,5 +74,15 @@ public class CarrelloUtil {
         }
         MagazzinoUtil.rimuoviProdotti(magazzino,carrello.getProdottiNelCarrello());
         return carrello.getProdottiNelCarrello();
+    }
+    public static BigDecimal totaleSpesaCarrello(Carrello carrello){
+        if (carrello==null){
+            throw new NullPointerException("Il carrello è null");
+        }
+        BigDecimal totSpesa = BigDecimal.ZERO;
+        for (Prodotto prodotto : carrello.getProdottiNelCarrello()) {
+            totSpesa = totSpesa.add(prodotto.getPrezzoVendita());
+        }
+        return totSpesa;
     }
 }
