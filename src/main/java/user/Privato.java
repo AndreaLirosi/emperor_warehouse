@@ -6,13 +6,14 @@ public class Privato extends Utente{
 
     private Carrello spesa;
 
-    public Privato(String name, String surname, String email, String password) {
-        super(name, surname, email, password);
-    }
 
     public Privato(String name, String surname, String email, String password, Carrello spesa) {
         super(name, surname, email, password);
         this.spesa = spesa;
+    }
+    public Privato(String name, String surname, String email, String password) {
+        super(name, surname, email, password);
+        this.spesa = new Carrello();
     }
 
     public Carrello getSpesa() {
@@ -25,12 +26,8 @@ public class Privato extends Utente{
 
     @Override
     public String toString() {
-        super.toString();
-        return "Utente{" +
-                "name='" + getName() + '\'' +
-                ", surname='" + getSurname() + '\'' +
-                ", email='" + getEmail() + '\'' +
-                ", password='" + getPassword() + '\'' +
+
+        return  super.toString()+
                 "Privato{" +
                 "spesa=" + spesa +
                 '}';
