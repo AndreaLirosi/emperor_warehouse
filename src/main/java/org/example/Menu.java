@@ -1,6 +1,8 @@
 package org.example;
 
 import carrello.Carrello;
+import magazzino.Magazzino;
+import magazzino.MagazzinoUtil;
 import prodotto.Prodotto;
 import user.*;
 
@@ -9,9 +11,10 @@ import java.util.Scanner;
 
 public class Menu {
 
+
     public static Utente selezioneMenu() {
 
-        System.out.println("clicca 1 se sei Utente privato\nclicca 2 se sei azienda");
+        System.out.println("clicca 1 se sei un Privato\nclicca 2 se sei un venditore");
         Scanner inputMenu = new Scanner(System.in);
         int scelta = inputMenu.nextInt();
         switch (scelta) {
@@ -73,65 +76,65 @@ public class Menu {
         return builder.build();
     }
 
-    public static void menuPrivato() {
+    public static void menuPrivato(Carrello spesa) {
 
 
         Scanner inputMenu = new Scanner(System.in);
         int scelta;
 
-        System.out.println("Selezionare operazione \n1 per creazione carrello \n2 per aggiunta elemento nel carrello " +
-                "\n3 per eliminare elemento dal carrello \n4 per effettuare ricerca nel magazzino " + "\n5 calcolo totale spesa" +
-                "\n6 acquista" + "\n0 per uscire dal menù");
+        System.out.println("Selezionare operazione \n1 per aggiunta elemento nel carrello  \n2 per eliminare elemento dal carrello " +
+                "\n3 per effettuare ricerca nel magazzino  \n4 calcolo totale spesa " + "\n5 acquista" +
+                "\n0 per uscire dal menù");
 
         scelta = inputMenu.nextInt();
         menuScelta(scelta);
     }
 
     public static void menuScelta(int scelta) {
-        // la scelta, poi, viene inserita in uno switch che gestirà le operazioni.
+
 
         switch (scelta) {
             case 0:
                 System.out.println("Uscita dal Programma");
                 break;
             case 1:
-                System.out.println("per creazione carrello");
+                System.out.println("aggiunta elemento nel carrello");
+                /*MainUtil. addProdotto_Carrello */
                 break;
             case 2:
-                System.out.println("aggiunta elemento nel carrello");
+                System.out.println("eliminare elemento dal carrello");
+                /*MainUtil. removeProdotto_Carrello */
                 break;
             case 3:
-                System.out.println("eliminare elemento dal carrello");
+                System.out.println("effettuare ricerca nel magazzino");
+                /*MainUtil.findProdotto_Magazzino */
                 break;
             case 4:
-                System.out.println("effettuare ricerca nel magazzino");
-                break;
-            case 5:
                 System.out.println("calcolo totale spesa");
                 break;
-            case 6:
+            case 5:
                 System.out.println("acquista");
+                /*MainUtil. soldCarrello */
                 break;
             default:
                 System.out.println("");
         }
     }
 
-    public static void menuAzienda() {
+    public static void menuAzienda(Azienda azienda) {
 
 
         Scanner inputMenu = new Scanner(System.in);
         int scelta;
 
-        System.out.println("Selezionare operazione \n1 oaggiungi prodotto al magazzino \n2 per aggiunta elemento nel carrello " +
-                "\n3 per eliminare elemento dal carrello \n4 per effettuare ricerca nel magazzino " + "\n0 per uscire dal menù");
+        System.out.println("Selezionare operazione \n1 per aggiungere un prodotto al magazzino \n2 per rimuovere un prodotto " +
+                "\n3 per stampare i prodotti \n4 per effettuare ricerca nel magazzino " + "\n0 per uscire dal menù");
 
         scelta = inputMenu.nextInt();
-        menuSceltaAzienda(scelta);
+        menuSceltaAzienda(scelta, azienda.getMagazzino());
     }
 
-    public static void menuSceltaAzienda(int scelta) {
-        // la scelta, poi, viene inserita in uno switch che gestirà le operazioni.
+    public static void menuSceltaAzienda(int scelta, Magazzino magazzino) {
 
         switch (scelta) {
             case 0:
@@ -139,15 +142,19 @@ public class Menu {
                 break;
             case 1:
                 System.out.println("aggiungi prodotto al magazzino");
+                /*MainUtil.addProdotto_Magazzino */
                 break;
             case 2:
-                System.out.println();
+                System.out.println("rimuovi prodotto");
+                /*MainUtil.removeProdotto_Magazzino */
                 break;
             case 3:
-                System.out.println();
+                System.out.println("stampa prodotti");
+                MagazzinoUtil.stampaProdotti(magazzino);
                 break;
             case 4:
                 System.out.println("effettuare ricerca nel magazzino");
+                /*MainUtil.findProdotto_Magazzino */
                 break;
             default:
                 System.out.println("");
