@@ -76,7 +76,7 @@ public class Menu {
         return builder.build();
     }
 
-    public static void menuPrivato(Carrello spesa) {
+    public static void menuPrivato() {
 
 
         Scanner inputMenu = new Scanner(System.in);
