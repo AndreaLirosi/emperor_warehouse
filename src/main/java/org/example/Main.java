@@ -1,12 +1,8 @@
 package org.example;
-
-import carrello.Carrello;
 import magazzino.Magazzino;
 import user.Azienda;
 import user.Privato;
-import user.PrivatoBuilder;
 import user.Utente;
-
 import java.util.ArrayList;
 
 public class Main {
@@ -21,11 +17,12 @@ public class Main {
 
 
         do {
+
             if (utenteLog instanceof Privato) {
                 Menu.menuPrivato();
                 loginFlag = false;
             } else if (utenteLog instanceof Azienda) {
-                Menu.menuAzienda();
+                Menu.menuAzienda((Azienda) utenteLog);
                 loginFlag = false;
             } else {
                 try {
