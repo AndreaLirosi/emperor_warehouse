@@ -4,6 +4,8 @@ import prodotto.Prodotto;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
+import java.util.Scanner;
 
 public class MagazzinoUtil {
 
@@ -38,13 +40,26 @@ public class MagazzinoUtil {
         };
     }
 
-    public static ArrayList<Prodotto> cercaProdottiRangePrezzo(Magazzino magazzino, double min, double max) {
+    public static ArrayList<Prodotto> cercaProdottiRangePrezzo(Magazzino magazzino) {
         ArrayList<Prodotto> result = new ArrayList<Prodotto>();
-        for (Prodotto luca : magazzino.getMagazzino()) {
-            if (luca.getPrezzoVendita().doubleValue() <= max && luca.getPrezzoVendita().doubleValue() >= min) {
-                result.add(luca);
-            }
+        Scanner inputScanner = new Scanner(System.in);
+
+try {
+    System.out.print("Inserisci il valore minimo del prezzo: ");
+    double min = inputScanner.nextDouble();
+
+    System.out.print("Inserisci il valore massimo del prezzo: ");
+    double max = inputScanner.nextDouble();
+
+    for (Prodotto luca : magazzino.getMagazzino()) {
+        if (luca.getPrezzoVendita().doubleValue() <= max && luca.getPrezzoVendita().doubleValue() >= min) {
+            result.add(luca);
         }
+    }
+}catch (InputMismatchException e) {
+    System.out.println("inserimento non valido!. inserire valori numerici.");
+}
+
         return result;
     }
 

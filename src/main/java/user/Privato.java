@@ -1,11 +1,16 @@
 package user;
 
 import carrello.Carrello;
+import magazzino.Magazzino;
 
 public class Privato extends Utente{
 
     private Carrello spesa;
+    private Magazzino magazzino;
 
+    public Magazzino getMagazzino() {
+        return magazzino;
+    }
 
     public Privato(String name, String surname, String email, String password, Carrello spesa) {
         super(name, surname, email, password);
