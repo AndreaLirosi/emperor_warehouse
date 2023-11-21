@@ -8,17 +8,12 @@ public class Azienda extends Utente {
     private Magazzino magazzino;
 
 
-    public Azienda(String name, String surname, String email, String password, String societyName, Magazzino magazzino) {
-        super(name, surname, email, password);
-        this.societyName = societyName;
-        this.magazzino = magazzino;
-    }
-
     public Azienda(String name, String surname, String email, String password, String societyName) {
         super(name, surname, email, password);
         this.societyName = societyName;
         this.magazzino = new Magazzino();
     }
+
     public String getSocietyName() {
         return societyName;
     }
@@ -29,7 +24,7 @@ public class Azienda extends Utente {
 
     @Override
     public String toString() {
-        return super.toString()+
+        return super.toString() +
                 "Azienda{" +
                 "societyName='" + societyName + '\'' +
                 ", magazzino=" + magazzino +

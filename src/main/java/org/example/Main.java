@@ -19,7 +19,7 @@ public class Main {
         do {
 
             if (utenteLog instanceof Privato) {
-                Menu.menuPrivato();
+                Menu.menuPrivato((Privato) utenteLog);
                 loginFlag = false;
             } else if (utenteLog instanceof Azienda) {
                 Menu.menuAzienda((Azienda) utenteLog);
