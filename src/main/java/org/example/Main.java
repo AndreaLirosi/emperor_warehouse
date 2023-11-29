@@ -1,13 +1,20 @@
 package org.example;
 import magazzino.Magazzino;
+import prodotto.Prodotto;
+import prodotto.ProdottoBuilder;
 import user.Azienda;
 import user.Privato;
 import user.Utente;
+
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 public class Main {
 
     public static void main(String[] args) {
+
+
+
 
         ArrayList<Utente> dbUtenti = new ArrayList<>();
         dbUtenti.add(new Utente("g", "h", "j", "kl"));
