@@ -1,5 +1,7 @@
 package magazzino;
 
+import Database.DbUtils;
+import org.example.Main;
 import prodotto.Prodotto;
 
 import java.math.BigDecimal;
@@ -10,6 +12,7 @@ import java.util.Scanner;
 public class MagazzinoUtil {
 
     public static boolean aggiungereProdotto(Magazzino magazzino, Prodotto prodotto) {
+
         magazzino.getMagazzino().add(prodotto);
         return true;
     }
@@ -97,6 +100,7 @@ try {
     }
 
     public static ArrayList<Prodotto> ricercaPerDimensione(Magazzino magazzino, String ricerca) {
+
         ArrayList<Prodotto> result = new ArrayList<Prodotto>();
 
         for (Prodotto luca : magazzino.getMagazzino()) {

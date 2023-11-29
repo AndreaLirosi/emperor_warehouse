@@ -21,4 +21,11 @@ public class Magazzino {
     public void setMagazzino(ArrayList<Prodotto> magazzino) {
         this.magazzino = magazzino;
     }
+
+    @Override
+    public String toString() {
+        return "Magazzino{" +
+                "magazzino=" + magazzino +
+                '}';
+    }
 }
