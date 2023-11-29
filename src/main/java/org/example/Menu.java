@@ -1,5 +1,6 @@
 package org.example;
 
+import Database.DbUtils;
 import carrello.Carrello;
 import magazzino.Magazzino;
 import magazzino.MagazzinoUtil;
@@ -12,11 +13,22 @@ import java.util.Scanner;
 public class Menu {
 
 
-    public static Utente selezioneMenu() {
-
+    public static int selezioneMenuStamp(){
         System.out.println("clicca 1 se sei un Privato\nclicca 2 se sei un venditore");
         Scanner inputMenu = new Scanner(System.in);
+        if (!inputMenu.hasNextInt()){
+            throw new RuntimeException("Mi inserisci uno dei numeri richiesti? GRAZIE");
+        }
         int scelta = inputMenu.nextInt();
+        if (scelta<0 || scelta>3){
+            throw new RuntimeException("Mi inserisci uno dei numeri richiesti? GRAZIE");
+        }
+        return scelta;
+    }
+
+    public static Utente selezioneMenu(int scelta) {
+
+
         switch (scelta) {
             case 1:
                 return creazionePrivato();
@@ -25,7 +37,7 @@ public class Menu {
             case 3:
                 return login();
             default:
-                throw new RuntimeException("Scelta non disponibile: " + scelta);
+                throw new RuntimeException("Scelta non disponibile: " + selezioneMenuStamp());
         }
     }
 
@@ -87,11 +99,11 @@ public class Menu {
                 "\n0 per uscire dal menù");
 
         scelta = inputMenu.nextInt();
-        menuScelta(scelta, inputMenu, privato.getMagazzino());
+        menuScelta(scelta, inputMenu);
     }
 
-    public static void menuScelta(int scelta, Scanner inputMenu, Magazzino magazzino) {
-
+    public static void menuScelta(int scelta, Scanner inputMenu) {
+        Magazzino magazzino = new Magazzino(DbUtils.mapMagazzino());
 
         switch (scelta) {
             case 0:
@@ -134,11 +146,11 @@ public class Menu {
                 "\n3 per stampare i prodotti \n4 per effettuare ricerca nel magazzino " + "\n0 per uscire dal menù");
 
         scelta = inputMenu.nextInt();
-        menuSceltaAzienda(scelta, azienda.getMagazzino(),inputMenu);
+        menuSceltaAzienda(scelta,inputMenu);
     }
 
-    public static void menuSceltaAzienda(int scelta, Magazzino magazzino, Scanner inputMenu) {
-
+    public static void menuSceltaAzienda(int scelta, Scanner inputMenu) {
+        Magazzino magazzino = new Magazzino(DbUtils.mapMagazzino());
         switch (scelta) {
             case 0:
                 System.out.println("Uscita dal Programma");

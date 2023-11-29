@@ -1,4 +1,5 @@
 package org.example;
+import Database.DbUtils;
 import magazzino.Magazzino;
 import prodotto.Prodotto;
 import prodotto.ProdottoBuilder;
@@ -12,6 +13,9 @@ import java.util.ArrayList;
 public class Main {
 
     public static void main(String[] args) {
+        //Magazzino magazzino = new Magazzino(DbUtils.createMagazzino());
+
+       // System.out.println(magazzino);
 
 
 
@@ -20,7 +24,7 @@ public class Main {
         dbUtenti.add(new Utente("g", "h", "j", "kl"));
         Magazzino azienda_preimpostata_perOperazioni_utente = new Magazzino();
         boolean loginFlag = true;
-        Utente utenteLog = Menu.selezioneMenu();
+        Utente utenteLog = Menu.selezioneMenu(Menu.selezioneMenuStamp());
 
 
         do {
