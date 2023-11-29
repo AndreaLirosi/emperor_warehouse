@@ -5,17 +5,14 @@ import carrello.CarrelloUtil;
 import magazzino.Magazzino;
 import magazzino.MagazzinoUtil;
 import magazzino.ParametroRicerca;
-import prodotto.Notebook;
-import prodotto.Prodotto;
-import prodotto.Smartphone;
-import prodotto.Tablet;
-import user.Azienda;
-import user.Utente;
+import prodotto.ProdottoBuilder;
 
 import java.math.BigDecimal;
 import java.util.Scanner;
 
 public class MainUtil {
+
+
     public static boolean addProdotto_Magazzino(Magazzino magazzino, Scanner scanner) {
         System.out.println("aggiungi:\n1-> Tablet\n2-> Notebook\n3-> Smartphone");
         int scelta = scanner.nextInt();
@@ -24,7 +21,7 @@ public class MainUtil {
                 MagazzinoUtil.aggiungereProdotto(magazzino, new Tablet("Apple", "PinkLady", "la mela del supermercato", 1, "piu del normale", BigDecimal.valueOf(20), BigDecimal.valueOf(20000), "Giacomo"));
                 return true;
             case 2:
-                MagazzinoUtil.aggiungereProdotto(magazzino, new Notebook("Ma chi li compra?", "Ma pigliati un fisso", "che poi ti ritrovi copme paola", 0, "non ne ha", BigDecimal.valueOf(20), BigDecimal.valueOf(20000), "Paola2"));
+                MagazzinoUtil.aggiungereProdotto(magazzino, new Notebook("Ma chi li compra?", "Ma pigliati un fisso", "che poi ti ritrovi come paola", 0, "non ne ha", BigDecimal.valueOf(20), BigDecimal.valueOf(20000), "Paola2"));
                 return true;
             case 3:
                 MagazzinoUtil.aggiungereProdotto(magazzino, new Smartphone("Apple", "Smith", "la mela del supermercato", 1, "piu del normale", BigDecimal.valueOf(20), BigDecimal.valueOf(20000), "Giacomo"));

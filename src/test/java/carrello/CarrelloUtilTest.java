@@ -1,10 +1,8 @@
 package carrello;
 
 import magazzino.Magazzino;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import prodotto.Prodotto;
-import prodotto.Smartphone;
 
 
 import java.math.BigDecimal;
