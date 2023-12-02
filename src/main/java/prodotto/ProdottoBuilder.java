@@ -6,12 +6,6 @@ import user.UtenteBuilder;
 import java.math.BigDecimal;
 
 
-enum Tipo {
-    TABLET,
-    SMARTPHONE,
-    NOTEBOOK
-}
-
 public class ProdottoBuilder {
 
     private String produttore;

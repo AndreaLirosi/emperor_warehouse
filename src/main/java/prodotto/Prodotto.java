@@ -1,6 +1,7 @@
 package prodotto;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 public class Prodotto {
 
@@ -20,8 +21,8 @@ public class Prodotto {
         this.descrizione = descrizione;
         this.dimensione = dimensione;
         this.memoria = memoria;
-        this.prezzoAcquisto = prezzoAcquisto;
-        this.prezzoVendita = prezzoVendita;
+        this.prezzoAcquisto = prezzoAcquisto.setScale(2,RoundingMode.HALF_DOWN);
+        this.prezzoVendita = prezzoVendita.setScale(2,RoundingMode.HALF_DOWN);
         this.id = id;
         this.tipo = tipo;
 
@@ -81,7 +82,7 @@ public class Prodotto {
     }
 
     public void setPrezzoAcquisto(BigDecimal prezzoAcquisto) {
-        this.prezzoAcquisto = prezzoAcquisto;
+        this.prezzoAcquisto = prezzoAcquisto.setScale(2,RoundingMode.HALF_DOWN);
     }
 
     public BigDecimal getPrezzoVendita() {
@@ -89,7 +90,7 @@ public class Prodotto {
     }
 
     public void setPrezzoVendita(BigDecimal prezzoVendita) {
-        this.prezzoVendita = prezzoVendita;
+        this.prezzoVendita = prezzoVendita.setScale(2,RoundingMode.HALF_DOWN);
     }
 
     public String getId() {
