@@ -1,4 +1,5 @@
 package Database;
+
 import prodotto.Prodotto;
 import prodotto.ProdottoBuilder;
 import prodotto.Tipo;
@@ -6,6 +7,7 @@ import prodotto.Tipo;
 import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 public class DbUtils {
@@ -35,14 +37,44 @@ public class DbUtils {
         return magazzino;
     }
 
-    public static Prodotto addProduct(String produttore, String modello, String descrizione, int dimensione, String memoria, BigDecimal prezzoAcquisto, BigDecimal prezzoVendita, Tipo tipo) throws SQLException {
-        Prodotto prodotto = null;
+
+    public static boolean addProduct_to_db(String produttore, String modello, String descrizione, int dimensione, String memoria, BigDecimal prezzoAcquisto, BigDecimal prezzoVendita, Tipo tipo) throws SQLException {
+
         String insertProduct = "INSERT INTO teamprogetto.dbmagazzino " +
                 "(Produttore, Modello, Descrizione, Dimensione, Memoria, Prezzo_acquisto, Prezzo_vendita, Tipo) " +
                 "VALUES " +
                 "(" + produttore + "," + modello + "," + descrizione + "," + dimensione + "," + memoria + "," + prezzoAcquisto + "," + prezzoVendita + "," + tipo + ");";
         try {
-            ResultSet resultSet = DbManager.drawQuery().executeQuery(insertProduct);
+            DbManager.drawQuery().executeQuery(insertProduct);
+        } catch (SQLException e) {
+            System.out.println("Il prodotto non è stato inserito nel db");
+            e.getMessage();
+        }
+
+        return true;
+    }
+
+    public static Prodotto mappa_prodotto(int id) throws SQLException {
+
+        try (Statement stmt = DbManager.drawQuery()) {
+            ResultSet rs = stmt.executeQuery("SELECT * FROM teamprogetto.dbmagazzino WHERE id = " + id + " ;");
+            ProdottoBuilder builder = new ProdottoBuilder();
+            builder.setId(rs.getString("id"))
+                    .setProduttore(rs.getString("Produttore"))
+                    .setModello(rs.getString("Modello"))
+                    .setDimensione(rs.getInt("Dimensione"))
+                    .setDescrizione(rs.getString("Descrizione"))
+                    .setMemoria(rs.getString("Memoria"))
+                    .setPrezzoAcquisto(rs.getBigDecimal("Prezzo_acquisto"))
+                    .setPrezzoVendita(rs.getBigDecimal("Prezzo_vendita"))
+                    .setTipo(Tipo.stringTipo(rs.getString("Tipo")));
+            return builder.build();
+        }
+    }
+
+    public static ArrayList<Prodotto> mappa_prodotti(ResultSet resultSet) throws SQLException {
+        ArrayList<Prodotto> tabella_prodotti = new ArrayList<>();
+        while (resultSet.next()) {
             ProdottoBuilder builder = new ProdottoBuilder();
             builder.setId(resultSet.getString("id"))
                     .setProduttore(resultSet.getString("Produttore"))
@@ -53,12 +85,27 @@ public class DbUtils {
                     .setPrezzoAcquisto(resultSet.getBigDecimal("Prezzo_acquisto"))
                     .setPrezzoVendita(resultSet.getBigDecimal("Prezzo_vendita"))
                     .setTipo(Tipo.stringTipo(resultSet.getString("Tipo")));
-            prodotto = builder.build();
-        } catch (SQLException e) {
-            e.getMessage();
+            tabella_prodotti.add(builder.build());
         }
-
-        return prodotto;
+        return tabella_prodotti;
     }
+
+    /**da duplicare per ogni view creata [per tipo, per parametro di ricerca...]*/
+    public static ArrayList<Prodotto> stampa_view_nomeview() throws SQLException {
+        String nome_view = "SELECT * FROM *nomeview*";
+        try (Statement stmt = DbManager.drawQuery()) {
+            return mappa_prodotti(stmt.executeQuery(nome_view));
+        }
+    }
+
+    public static ArrayList<Prodotto> cerca_per_range (BigDecimal minimo, BigDecimal massimo)throws SQLException{
+        String ricerca_range= "SELECT * FROM teamprogetto.dbmagazzino WHERE Prezzo_vendita BETWEEN "+ minimo +" AND " +massimo;
+        try(Statement stmt = DbManager.drawQuery()){
+            return mappa_prodotti(stmt.executeQuery(ricerca_range));
+        }
+    }
+
+
+
 }
 
