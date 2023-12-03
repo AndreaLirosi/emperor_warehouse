@@ -8,14 +8,14 @@ public class Prodotto {
     private String produttore;
     private String modello;
     private String descrizione;
-    private int dimensione;
+    private double dimensione;
     private String memoria;
     private BigDecimal prezzoAcquisto;
     private BigDecimal prezzoVendita;
-    private String id;
+    private int id;
     private Tipo tipo;
 
-    public Prodotto(String produttore, String modello, String descrizione, int dimensione, String memoria, BigDecimal prezzoAcquisto, BigDecimal prezzoVendita, String id, Tipo tipo) {
+    public Prodotto(String produttore, String modello, String descrizione, double dimensione, String memoria, BigDecimal prezzoAcquisto, BigDecimal prezzoVendita, int id, Tipo tipo) {
         this.produttore = produttore;
         this.modello = modello;
         this.descrizione = descrizione;
@@ -61,11 +61,11 @@ public class Prodotto {
         this.descrizione = descrizione;
     }
 
-    public int getDimensione() {
+    public double getDimensione() {
         return dimensione;
     }
 
-    public void setDimensione(int dimensione) {
+    public void setDimensione(double dimensione) {
         this.dimensione = dimensione;
     }
 
@@ -93,11 +93,11 @@ public class Prodotto {
         this.prezzoVendita = prezzoVendita.setScale(2,RoundingMode.HALF_DOWN);
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

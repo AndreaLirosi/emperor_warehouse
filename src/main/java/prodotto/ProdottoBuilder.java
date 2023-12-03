@@ -11,11 +11,11 @@ public class ProdottoBuilder {
     private String produttore;
     private String modello;
     private String descrizione;
-    private int dimensione;
+    private double dimensione;
     private String memoria;
     private BigDecimal prezzoAcquisto;
     private BigDecimal prezzoVendita;
-    private String id;
+    private int id;
     private Tipo tipo;
 
     public ProdottoBuilder () {
@@ -58,11 +58,11 @@ public class ProdottoBuilder {
         return this;
     }
 
-    public int getDimensione() {
+    public double getDimensione() {
         return dimensione;
     }
 
-    public ProdottoBuilder setDimensione(int dimensione) {
+    public ProdottoBuilder setDimensione(double dimensione) {
         this.dimensione = dimensione;
         return this;
     }
@@ -94,11 +94,11 @@ public class ProdottoBuilder {
         return this;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public ProdottoBuilder setId(String id) {
+    public ProdottoBuilder setId(int id) {
         this.id = id;
         return this;
     }
