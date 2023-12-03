@@ -77,7 +77,7 @@ public class DbUtils {
         }
     }
 
-    public static ArrayList<Prodotto> mappa_prodotti(ResultSet resultSet) {
+    private static ArrayList<Prodotto> mappa_prodotti(ResultSet resultSet) {
         ArrayList<Prodotto> tabella_prodotti = new ArrayList<>();
         try {
             while (resultSet.next()) {
@@ -103,14 +103,14 @@ public class DbUtils {
      * da duplicare per ogni view creata [per tipo, per parametro di ricerca (asc, desc)...]
      * //CREATE VIEW tablet AS SELECT * FROM dbmagazzino WHERE Tipo = 'TABLET' WITH CASCADED CHECK OPTION;
      * //SELECT * FROM dbmagazzino ORDER BY Prezzo_vendita ASC;
-
-            public static ArrayList<Prodotto> stampa_view_nomeview() throws SQLException {
-                String nome_view = "SELECT * FROM *nomeview*";
-                try (Statement stmt = DbManager.drawQuery()) {
-                    return mappa_prodotti(stmt.executeQuery(nome_view));
-                }
-            }
-    */
+     * <p>
+     * public static ArrayList<Prodotto> stampa_view_nomeview() throws SQLException {
+     * String nome_view = "SELECT * FROM *nomeview*";
+     * try (Statement stmt = DbManager.drawQuery()) {
+     * return mappa_prodotti(stmt.executeQuery(nome_view));
+     * }
+     * }
+     */
 
     public static ArrayList<Prodotto> stampa_view_tablet() throws SQLException {
         String nome_view = "SELECT * FROM tablet";
@@ -132,48 +132,56 @@ public class DbUtils {
             return mappa_prodotti(stmt.executeQuery(nome_view));
         }
     }
+
     public static ArrayList<Prodotto> stampa_view_prezzo_vendita_asc() throws SQLException {
         String nome_view = "SELECT * FROM prezzo_vendita_asc";
         try (Statement stmt = DbManager.drawQuery()) {
             return mappa_prodotti(stmt.executeQuery(nome_view));
         }
     }
+
     public static ArrayList<Prodotto> stampa_view_prezzo_vendita_desc() throws SQLException {
         String nome_view = "SELECT * FROM prezzo_vendita_desc";
         try (Statement stmt = DbManager.drawQuery()) {
             return mappa_prodotti(stmt.executeQuery(nome_view));
         }
     }
+
     public static ArrayList<Prodotto> stampa_view_prezzo_acquisto_desc() throws SQLException {
         String nome_view = "SELECT * FROM prezzo_acquisto_desc";
         try (Statement stmt = DbManager.drawQuery()) {
             return mappa_prodotti(stmt.executeQuery(nome_view));
         }
     }
+
     public static ArrayList<Prodotto> stampa_view_prezzo_acquisto_asc() throws SQLException {
         String nome_view = "SELECT * FROM prezzo_acquisto_asc";
         try (Statement stmt = DbManager.drawQuery()) {
             return mappa_prodotti(stmt.executeQuery(nome_view));
         }
     }
+
     public static ArrayList<Prodotto> stampa_view_dimensione_asc() throws SQLException {
         String nome_view = "SELECT * FROM dimensione_asc";
         try (Statement stmt = DbManager.drawQuery()) {
             return mappa_prodotti(stmt.executeQuery(nome_view));
         }
     }
+
     public static ArrayList<Prodotto> stampa_view_dimensione_desc() throws SQLException {
         String nome_view = "SELECT * FROM dimensione_desc";
         try (Statement stmt = DbManager.drawQuery()) {
             return mappa_prodotti(stmt.executeQuery(nome_view));
         }
     }
+
     public static ArrayList<Prodotto> stampa_view_memoria_desc() throws SQLException {
         String nome_view = "SELECT * FROM memoria_desc";
         try (Statement stmt = DbManager.drawQuery()) {
             return mappa_prodotti(stmt.executeQuery(nome_view));
         }
     }
+
     public static ArrayList<Prodotto> stampa_view_memoria_asc() throws SQLException {
         String nome_view = "SELECT * FROM memoria_asc";
         try (Statement stmt = DbManager.drawQuery()) {
