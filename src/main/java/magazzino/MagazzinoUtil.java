@@ -148,7 +148,7 @@ try {
         ArrayList<Prodotto> result = new ArrayList<Prodotto>();
 
         for (Prodotto luca : magazzino.getMagazzino()) {
-            if (luca.getId().equalsIgnoreCase(ricerca)) {
+            if (luca.getId()==Integer.parseInt(ricerca)) {
                 result.add(luca);
             }
         }

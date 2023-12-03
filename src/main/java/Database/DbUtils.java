@@ -9,6 +9,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class DbUtils {
     private static String selectQuery = "SELECT * FROM dbmagazzino";
@@ -20,7 +22,7 @@ public class DbUtils {
             ProdottoBuilder builder = new ProdottoBuilder();
 
             while (resultSet.next()) {
-                builder.setId(resultSet.getString("id"))
+                builder.setId(resultSet.getInt("id"))
                         .setProduttore(resultSet.getString("Produttore"))
                         .setModello(resultSet.getString("Modello"))
                         .setDimensione(resultSet.getInt("Dimensione"))
@@ -54,6 +56,7 @@ public class DbUtils {
         return true;
     }
 
+
     /**
      * ricerca a fine di aggiunta a carrello
      */
@@ -62,7 +65,7 @@ public class DbUtils {
         try (Statement stmt = DbManager.drawQuery()) {
             ResultSet rs = stmt.executeQuery("SELECT * FROM dbmagazzino WHERE id = " + id + " ;");
             ProdottoBuilder builder = new ProdottoBuilder();
-            builder.setId(rs.getString("id"))
+            builder.setId(rs.getInt("id"))
                     .setProduttore(rs.getString("Produttore"))
                     .setModello(rs.getString("Modello"))
                     .setDimensione(rs.getInt("Dimensione"))
@@ -82,7 +85,7 @@ public class DbUtils {
         try {
             while (resultSet.next()) {
                 ProdottoBuilder builder = new ProdottoBuilder();
-                builder.setId(resultSet.getString("id"))
+                builder.setId(resultSet.getInt("id"))
                         .setProduttore(resultSet.getString("Produttore"))
                         .setModello(resultSet.getString("Modello"))
                         .setDimensione(resultSet.getInt("Dimensione"))
@@ -243,6 +246,23 @@ public class DbUtils {
         String select_produttore = "SELECT * FROM dbmagazzino WHERE Prezzo_vendita = '" + prezzo_vendita + "' ;";
         try (Statement stmt = DbManager.drawQuery()) {
             return mappa_prodotti(stmt.executeQuery(select_produttore));
+        }
+    }
+
+    public static boolean rimozione_spesa_dal_db (ArrayList<Prodotto> spesa) {
+        for (Prodotto p : spesa){
+            delete_by_id(p.getId());
+        }
+        return true;
+    }
+
+    private static boolean delete_by_id (int id){
+        String delete_query = "DELETE FROM dbmagazzino WHERE id = "+id +" ;" ;
+        try (Statement stmt = DbManager.drawQuery()){
+            stmt.executeQuery(delete_query);
+            return true;
+        }catch (SQLException e){
+            throw new RuntimeException("ERRORE: Delete query ha dato un errore");
         }
     }
 
