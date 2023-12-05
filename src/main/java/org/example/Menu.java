@@ -168,7 +168,7 @@ public class Menu {
                 break;
             case 3:
                 System.out.println("stampa prodotti");
-                MagazzinoUtil.stampaProdotti(magazzino);
+                MagazzinoUtil.stampaProdotti();
                 break;
             case 4:
                 System.out.println("effettuare ricerca nel magazzino");
