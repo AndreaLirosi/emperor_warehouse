@@ -3,6 +3,8 @@ package Database;
 import prodotto.Prodotto;
 import prodotto.ProdottoBuilder;
 import prodotto.Tipo;
+import user.Azienda;
+import user.Utente;
 
 import java.math.BigDecimal;
 import java.sql.ResultSet;
@@ -14,6 +16,30 @@ import java.util.List;
 
 public class DbUtils {
     private static String selectQuery = "SELECT * FROM dbmagazzino";
+
+    public static boolean createMagazzino(Azienda utente) {
+        String create_table = "CREATE TABLE `"+utente.getSocietyName()+"` (\n" +
+                "  `id` int(11) PRIMARY KEY AUTO_INCREMENT,\n" +
+                "  `Produttore` varchar(30) DEFAULT NULL,\n" +
+                "  `Modello` varchar(30) DEFAULT NULL,\n" +
+                "  `Descrizione` varchar(50) DEFAULT NULL,\n" +
+                "  `Dimensione` float DEFAULT NULL,\n" +
+                "  `Memoria` varchar(30) DEFAULT NULL,\n" +
+                "  `Prezzo_acquisto` decimal(20,6) DEFAULT NULL,\n" +
+                "  `Prezzo_vendita` decimal(20,6) DEFAULT NULL,\n" +
+                "  `Tipo` varchar(30) DEFAULT NULL,\n" +
+                "  PRIMARY KEY (`id`)\n" +
+                ") ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4;";
+
+            try(Statement stms = DbManager.drawQuery()) {
+                stms.execute(create_table);
+                return true;
+            }
+            catch (SQLException e){
+                throw new RuntimeException("Errore durante la creazione della tabella");
+            }
+
+    }
 
     public static ArrayList<Prodotto> mapMagazzino() {
         ArrayList<Prodotto> magazzino = new ArrayList<>();
@@ -39,7 +65,9 @@ public class DbUtils {
         return magazzino;
     }
 
-
+    /**
+     * Inserimento di un prodotto nel db
+     */
     public static boolean addProduct_to_db(String produttore, String modello, String descrizione, int dimensione, String memoria, BigDecimal prezzoAcquisto, BigDecimal prezzoVendita, Tipo tipo) throws SQLException {
 
         String insertProduct = "INSERT INTO dbmagazzino " +
@@ -56,11 +84,31 @@ public class DbUtils {
         return true;
     }
 
+    /**
+     * Inserimento di un prodotto nel db
+     */
+    public static boolean addProduct_to_db(Prodotto p) throws SQLException {
+
+        String insertProduct = "INSERT INTO dbmagazzino " +
+                "(Produttore, Modello, Descrizione, Dimensione, Memoria, Prezzo_acquisto, Prezzo_vendita, Tipo) " +
+                "VALUES " +
+                "(" + p.getProduttore() + "," + p.getModello() + "," + p.getDescrizione() + "," + p.getDimensione() +
+                "," + p.getMemoria() + "," + p.getPrezzoAcquisto() + "," + p.getPrezzoVendita() + "," + p.getTipo() + ");";
+        try {
+            DbManager.drawQuery().executeQuery(insertProduct);
+        } catch (SQLException e) {
+            System.out.println("Il prodotto non è stato inserito nel db");
+            e.getMessage();
+        }
+
+        return true;
+    }
+
 
     /**
-     * ricerca a fine di aggiunta a carrello
+     * ricerca tramite id e restituzione dell'oggetto mappato
      */
-    public static Prodotto mappa_prodotto(String id) {
+    public static Prodotto mappa_prodotto(int id) {
 
         try (Statement stmt = DbManager.drawQuery()) {
             ResultSet rs = stmt.executeQuery("SELECT * FROM dbmagazzino WHERE id = " + id + " ;");
@@ -80,6 +128,32 @@ public class DbUtils {
         }
     }
 
+    /**
+     * dato un arrayList elimina ogni prodotto dell'arraylist dal db
+     */
+    public static boolean rimozione_spesa_dal_db(ArrayList<Prodotto> spesa) {
+        for (Prodotto p : spesa) {
+            delete_by_id(p.getId());
+        }
+        return true;
+    }
+
+    /**
+     * dato un id elimina il prodotto dal db
+     */
+    private static boolean delete_by_id(int id) {
+        String delete_query = "DELETE FROM dbmagazzino WHERE id = " + id + " ;";
+        try (Statement stmt = DbManager.drawQuery()) {
+            stmt.executeQuery(delete_query);
+            return true;
+        } catch (SQLException e) {
+            throw new RuntimeException("ERRORE: Delete query ha dato un errore");
+        }
+    }
+
+    /**
+     * Dato un ResultSet trasforma il risultato della query in un ArrayList<Prodotto>
+     */
     private static ArrayList<Prodotto> mappa_prodotti(ResultSet resultSet) {
         ArrayList<Prodotto> tabella_prodotti = new ArrayList<>();
         try {
@@ -192,6 +266,20 @@ public class DbUtils {
         }
     }
 
+    public static ArrayList<Prodotto> stampa_view_produttore() throws SQLException {
+        String nome_view = "SELECT * FROM produttore";
+        try (Statement stmt = DbManager.drawQuery()) {
+            return mappa_prodotti(stmt.executeQuery(nome_view));
+        }
+    }
+
+    public static ArrayList<Prodotto> stampa_view_modello() throws SQLException {
+        String nome_view = "SELECT * FROM modello";
+        try (Statement stmt = DbManager.drawQuery()) {
+            return mappa_prodotti(stmt.executeQuery(nome_view));
+        }
+    }
+
 
     public static ArrayList<Prodotto> cerca_per_range(BigDecimal minimo, BigDecimal massimo) throws SQLException {
         String ricerca_range = "SELECT * FROM dbmagazzino WHERE Prezzo_vendita BETWEEN " + minimo + " AND " + massimo;
@@ -246,23 +334,6 @@ public class DbUtils {
         String select_produttore = "SELECT * FROM dbmagazzino WHERE Prezzo_vendita = '" + prezzo_vendita + "' ;";
         try (Statement stmt = DbManager.drawQuery()) {
             return mappa_prodotti(stmt.executeQuery(select_produttore));
-        }
-    }
-
-    public static boolean rimozione_spesa_dal_db (ArrayList<Prodotto> spesa) {
-        for (Prodotto p : spesa){
-            delete_by_id(p.getId());
-        }
-        return true;
-    }
-
-    private static boolean delete_by_id (int id){
-        String delete_query = "DELETE FROM dbmagazzino WHERE id = "+id +" ;" ;
-        try (Statement stmt = DbManager.drawQuery()){
-            stmt.executeQuery(delete_query);
-            return true;
-        }catch (SQLException e){
-            throw new RuntimeException("ERRORE: Delete query ha dato un errore");
         }
     }
 

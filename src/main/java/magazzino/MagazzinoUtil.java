@@ -5,6 +5,7 @@ import org.example.Main;
 import prodotto.Prodotto;
 
 import java.math.BigDecimal;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -22,8 +23,8 @@ public class MagazzinoUtil {
         return true;
     }
 
-    public static void stampaProdotti(Magazzino magazzino) {
-        ArrayList<Prodotto> listaProdotti = magazzino.getMagazzino();
+    public static void stampaProdotti() {
+        ArrayList<Prodotto> listaProdotti = DbUtils.mapMagazzino();
 
         for (Prodotto prodotto : listaProdotti) {
             System.out.println(prodotto.toString());
@@ -40,6 +41,19 @@ public class MagazzinoUtil {
             case PREZZOACQUISTO -> ricercaPerPrezzoAcquisto(magazzino, ricerca);
             case PREZZOVENDITA -> ricercaPerPrezzoVendita(magazzino, ricerca);
             case ID -> ricercaPerId(magazzino, ricerca);
+        };
+    }
+    public static ArrayList<Prodotto> cercaProdotti(ParametroRicerca parametro, String ricerca) throws SQLException {
+        return switch (parametro) {
+            case PRODUTTORE -> DbUtils.cerca_per_produttore(ricerca);
+            case MODELLO -> DbUtils.cerca_per_modello(ricerca);
+            case DESCRIZIONE -> DbUtils.cerca_per_descrizione(ricerca);
+            case DIMENSIONE -> DbUtils.cerca_per_dimensione(Double.parseDouble(ricerca));
+            case MEMORIA -> DbUtils.cerca_per_memoria(Double.parseDouble(ricerca));
+            case PREZZOACQUISTO -> DbUtils.cerca_per_prezzo_acquisto(BigDecimal.valueOf(Double.parseDouble(ricerca)));
+            case PREZZOVENDITA -> DbUtils.cerca_per_prezzo_vendita(BigDecimal.valueOf(Double.parseDouble(ricerca)));
+
+            default -> throw new IllegalStateException("Se conosci già l'id del prodotto aggiungilo al tuo carrello!");
         };
     }
 
