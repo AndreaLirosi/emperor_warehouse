@@ -295,21 +295,21 @@ public class DbUtils {
     }
 
     public static ArrayList<Prodotto> cerca_per_produttore(String produttore) throws SQLException {
-        String select_produttore = "SELECT * FROM dbmagazzino WHERE Produttore = '" + produttore + "' ;";
+        String select_produttore = "SELECT * FROM dbmagazzino WHERE Produttore LIKE '%" + produttore + "%' ;";
         try (Statement stmt = DbManager.drawQuery()) {
             return mappa_prodotti(stmt.executeQuery(select_produttore));
         }
     }
 
     public static ArrayList<Prodotto> cerca_per_modello(String modello) throws SQLException {
-        String select_produttore = "SELECT * FROM dbmagazzino WHERE Modello = '" + modello + "' ;";
+        String select_produttore = "SELECT * FROM dbmagazzino WHERE Modello LIKE '%" + modello + "%' ;";
         try (Statement stmt = DbManager.drawQuery()) {
             return mappa_prodotti(stmt.executeQuery(select_produttore));
         }
     }
 
     public static ArrayList<Prodotto> cerca_per_descrizione(String descrizione) throws SQLException {
-        String select_produttore = "SELECT * FROM dbmagazzino WHERE Descrizione = '" + descrizione + "' ;";
+        String select_produttore = "SELECT * FROM dbmagazzino WHERE Descrizione LIKE '%" + descrizione + "%' ;";
         try (Statement stmt = DbManager.drawQuery()) {
             return mappa_prodotti(stmt.executeQuery(select_produttore));
         }
@@ -323,7 +323,7 @@ public class DbUtils {
     }
 
     public static ArrayList<Prodotto> cerca_per_memoria(String memoria) throws SQLException {
-        String select_produttore = "SELECT * FROM dbmagazzino WHERE Memoria = '%" + memoria + "%' ;";
+        String select_produttore = "SELECT * FROM dbmagazzino WHERE Memoria LIKE '%" + memoria + "%' ;";
         try (Statement stmt = DbManager.drawQuery()) {
             return mappa_prodotti(stmt.executeQuery(select_produttore));
         }
