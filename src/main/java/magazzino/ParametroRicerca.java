@@ -8,6 +8,7 @@ public enum ParametroRicerca {
     MEMORIA,
     PREZZOACQUISTO,
     PREZZOVENDITA,
+    RANGE,
     ID
 
 }

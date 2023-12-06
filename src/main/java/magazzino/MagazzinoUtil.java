@@ -12,17 +12,18 @@ import java.util.Scanner;
 
 public class MagazzinoUtil {
 
-    public static boolean aggiungereProdotto(Magazzino magazzino, Prodotto prodotto) {
+    public static boolean aggiungereProdotto(Prodotto prodotto) {
         try {
             DbUtils.addProduct_to_db(prodotto);
-        }catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            return false;
         }
         return true;
     }
 
-    public static boolean rimuoviProdotti(Magazzino magazzino, ArrayList<Prodotto> prodottiDaRimuovere) {
-        magazzino.getMagazzino().removeAll(prodottiDaRimuovere);
+    public static boolean rimuoviProdotti(ArrayList<Prodotto> prodottiDaRimuovere) {
+        DbUtils.rimozione_spesa_dal_db(prodottiDaRimuovere);
         return true;
     }
 
@@ -34,144 +35,155 @@ public class MagazzinoUtil {
         }
     }
 
-    public static ArrayList<Prodotto> cercaProdotti(Magazzino magazzino, ParametroRicerca parametro, String ricerca) {
+    public static ArrayList<Prodotto> cercaProdotti(ParametroRicerca parametro) {
         return switch (parametro) {
             case PRODUTTORE -> ricercaPerProduttore();
-            case MODELLO -> ricercaPerModello(magazzino, ricerca);
-            case DESCRIZIONE -> ricercaPerDescrizione(magazzino, ricerca);
-            case DIMENSIONE -> ricercaPerDimensione(magazzino, ricerca);
-            case MEMORIA -> ricercaPerMemoria(magazzino, ricerca);
-            case PREZZOACQUISTO -> ricercaPerPrezzoAcquisto(magazzino, ricerca);
-            case PREZZOVENDITA -> ricercaPerPrezzoVendita(magazzino, ricerca);
-            case ID -> ricercaPerId(magazzino, ricerca);
-        };
-    }
-    public static ArrayList<Prodotto> cercaProdotti(ParametroRicerca parametro, String ricerca) throws SQLException {
-        return switch (parametro) {
-            case PRODUTTORE -> DbUtils.cerca_per_produttore(ricerca);
-            case MODELLO -> DbUtils.cerca_per_modello(ricerca);
-            case DESCRIZIONE -> DbUtils.cerca_per_descrizione(ricerca);
-            case DIMENSIONE -> DbUtils.cerca_per_dimensione(Double.parseDouble(ricerca));
-            case MEMORIA -> DbUtils.cerca_per_memoria(Double.parseDouble(ricerca));
-            case PREZZOACQUISTO -> DbUtils.cerca_per_prezzo_acquisto(BigDecimal.valueOf(Double.parseDouble(ricerca)));
-            case PREZZOVENDITA -> DbUtils.cerca_per_prezzo_vendita(BigDecimal.valueOf(Double.parseDouble(ricerca)));
+            case MODELLO -> ricercaPerModello();
+            case DESCRIZIONE -> ricercaPerDescrizione();
+            case DIMENSIONE -> ricercaPerDimensione();
+            case MEMORIA -> ricercaPerMemoria();
+            case PREZZOACQUISTO -> ricercaPerPrezzoAcquisto();
+            case PREZZOVENDITA -> ricercaPerPrezzoVendita();
+            case RANGE -> ricercaPerRange();
 
             default -> throw new IllegalStateException("Se conosci già l'id del prodotto aggiungilo al tuo carrello!");
+
+        };
+    }
+    public static ArrayList<Prodotto> ricercaProdottiStatica_azienda(ParametroRicerca parametro) throws SQLException {
+        return switch (parametro) {
+            case PRODUTTORE -> DbUtils.stampa_view_produttore();
+            case MODELLO -> DbUtils.stampa_view_modello();
+            case DESCRIZIONE -> DbUtils.stampa_view_descrizione();
+            case DIMENSIONE -> DbUtils.stampa_view_dimensione_asc();
+            case MEMORIA -> DbUtils.stampa_view_memoria_asc();
+            case PREZZOACQUISTO -> DbUtils.stampa_view_prezzo_acquisto_asc();
+            case PREZZOVENDITA -> DbUtils.stampa_view_prezzo_vendita_asc();
+
+            default -> throw new IllegalStateException("Errore: ricerca fallita!");
+        };
+    }
+    public static ArrayList<Prodotto> ricercaProdottiStatica_spesa(ParametroRicerca parametro) throws SQLException {
+        return switch (parametro) {
+            case PRODUTTORE -> DbUtils.stampa_view_produttore();
+            case MODELLO -> DbUtils.stampa_view_modello();
+            case DIMENSIONE -> DbUtils.stampa_view_dimensione_asc();
+            case MEMORIA -> DbUtils.stampa_view_memoria_asc();
+            case PREZZOVENDITA -> DbUtils.stampa_view_prezzo_vendita_asc();
+
+            default -> throw new IllegalStateException("Errore: ricerca fallita!");
         };
     }
 
-    public static ArrayList<Prodotto> cercaProdottiRangePrezzo(Magazzino magazzino) {
-        ArrayList<Prodotto> result = new ArrayList<Prodotto>();
-        Scanner inputScanner = new Scanner(System.in);
-
-try {
-    System.out.print("Inserisci il valore minimo del prezzo: ");
-    double min = inputScanner.nextDouble();
-
-    System.out.print("Inserisci il valore massimo del prezzo: ");
-    double max = inputScanner.nextDouble();
-
-    for (Prodotto luca : magazzino.getMagazzino()) {
-        if (luca.getPrezzoVendita().doubleValue() <= max && luca.getPrezzoVendita().doubleValue() >= min) {
-            result.add(luca);
-        }
-    }
-}catch (InputMismatchException e) {
-    System.out.println("inserimento non valido!. inserire valori numerici.");
-}
-
-        return result;
-    }
-
-    public static ArrayList<Prodotto> ricercaPerProduttore()  {
+    public static ArrayList<Prodotto> ricercaPerProduttore() {
         Scanner inputMenu = new Scanner(System.in);
         System.out.println("inserisci produttore");
         String scelta = inputMenu.nextLine();
         try {
             return DbUtils.cerca_per_produttore(scelta);
-        }catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException("Errore: Ricerca fallita");
         }
-       return null;
     }
 
 
-    public static ArrayList<Prodotto> ricercaPerModello(Magazzino magazzino, String ricerca) {
-        ArrayList<Prodotto> result = DbUtils.mapMagazzino();
-
-        for (Prodotto luca : magazzino.getMagazzino()) {
-            if (luca.getModello().equalsIgnoreCase(ricerca)) {
-                result.add(luca);
-            }
+    public static ArrayList<Prodotto> ricercaPerModello() {
+        Scanner inputMenu = new Scanner(System.in);
+        System.out.println("inserisci modello");
+        String scelta = inputMenu.nextLine();
+        try {
+            return DbUtils.cerca_per_modello(scelta);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException("Errore: Ricerca fallita");
         }
-        return result;
     }
 
-    public static ArrayList<Prodotto> ricercaPerDescrizione(Magazzino magazzino, String ricerca) {
-        ArrayList<Prodotto> result = DbUtils.mapMagazzino();
-
-        for (Prodotto luca : magazzino.getMagazzino()) {
-            if (luca.getDescrizione().equalsIgnoreCase(ricerca)) {
-                result.add(luca);
-            }
+    public static ArrayList<Prodotto> ricercaPerDescrizione() {
+        Scanner inputMenu = new Scanner(System.in);
+        System.out.println("inserisci descrizione");
+        String scelta = inputMenu.nextLine();
+        try {
+            return DbUtils.cerca_per_descrizione(scelta);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException("Errore: Ricerca fallita");
         }
-        return result;
     }
 
-    public static ArrayList<Prodotto> ricercaPerDimensione(Magazzino magazzino, String ricerca) {
-
-        ArrayList<Prodotto> result = DbUtils.mapMagazzino();
-
-        for (Prodotto luca : magazzino.getMagazzino()) {
-            if (luca.getDimensione() == Integer.parseInt(ricerca)) {
-                result.add(luca);
-            }
+    public static ArrayList<Prodotto> ricercaPerDimensione() {
+        Scanner inputMenu = new Scanner(System.in);
+        System.out.println("inserisci dimensione");
+        String scelta = inputMenu.nextLine();
+        try {
+            return DbUtils.cerca_per_dimensione(Double.parseDouble(scelta));
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException("Errore: Ricerca fallita");
         }
-        return result;
     }
 
-    public static ArrayList<Prodotto> ricercaPerMemoria(Magazzino magazzino, String ricerca) {
-        ArrayList<Prodotto> result = DbUtils.mapMagazzino();
-
-        for (Prodotto luca : magazzino.getMagazzino()) {
-            if (luca.getMemoria().equalsIgnoreCase(ricerca)) {
-                result.add(luca);
-            }
+    public static ArrayList<Prodotto> ricercaPerMemoria() {
+        Scanner inputMenu = new Scanner(System.in);
+        System.out.println("inserisci memoria");
+        String scelta = inputMenu.nextLine();
+        try {
+            return DbUtils.cerca_per_memoria(Double.parseDouble(scelta));
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException("Errore: Ricerca fallita");
         }
-        return result;
     }
 
-    public static ArrayList<Prodotto> ricercaPerPrezzoAcquisto(Magazzino magazzino, String ricerca) {
-        ArrayList<Prodotto> result = DbUtils.mapMagazzino();
-
-        for (Prodotto luca : magazzino.getMagazzino()) {
-            if (luca.getPrezzoAcquisto().equals(BigDecimal.valueOf(Integer.parseInt(ricerca)))) {
-                result.add(luca);
-            }
+    public static ArrayList<Prodotto> ricercaPerPrezzoAcquisto() {
+        Scanner inputMenu = new Scanner(System.in);
+        System.out.println("inserisci prezzo di acquisto");
+        String scelta = inputMenu.nextLine();
+        try {
+            return DbUtils.cerca_per_prezzo_acquisto(BigDecimal.valueOf(Double.parseDouble(scelta)));
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException("Errore: Ricerca fallita");
         }
-        return result;
     }
 
-    public static ArrayList<Prodotto> ricercaPerPrezzoVendita(Magazzino magazzino, String ricerca) {
-        ArrayList<Prodotto> result = DbUtils.mapMagazzino();
-
-        for (Prodotto luca : magazzino.getMagazzino()) {
-            if (luca.getPrezzoVendita().equals(BigDecimal.valueOf(Integer.parseInt(ricerca)))) {
-                result.add(luca);
-            }
+    public static ArrayList<Prodotto> ricercaPerPrezzoVendita() {
+        Scanner inputMenu = new Scanner(System.in);
+        System.out.println("inserisci prezzo di vendita");
+        String scelta = inputMenu.nextLine();
+        try {
+            return DbUtils.cerca_per_prezzo_vendita(BigDecimal.valueOf(Double.parseDouble(scelta)));
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException("Errore: Ricerca fallita");
         }
-        return result;
     }
 
-    public static ArrayList<Prodotto> ricercaPerId(Magazzino magazzino, String ricerca) {
-        ArrayList<Prodotto> result = DbUtils.mapMagazzino();
-
-        for (Prodotto luca : magazzino.getMagazzino()) {
-            if (luca.getId()==Integer.parseInt(ricerca)) {
-                result.add(luca);
-            }
+    public static ArrayList<Prodotto> ricercaPerRange() {
+        Scanner inputMenu = new Scanner(System.in);
+        System.out.println("inserisci prezzo minimo:");
+        BigDecimal min = inputMenu.nextBigDecimal();
+        System.out.println("inserisci prezzo massimo:");
+        BigDecimal max = inputMenu.nextBigDecimal();
+        try {
+            return DbUtils.cerca_per_range(min, max);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException("Errore: Ricerca fallita");
         }
-        return result;
+    }
+
+    public static Prodotto ricercaPerId() {
+        Scanner inputMenu = new Scanner(System.in);
+        System.out.println("inserisci l'ID del prodotto");
+        String scelta = inputMenu.nextLine();
+        try {
+            return DbUtils.mappa_prodotto(Integer.parseInt(scelta));
+        } catch (RuntimeException e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException("Errore: Ricerca fallita");
+        }
     }
 }
 //Aggiungere funzionalità di ricerca dei prodotti nella classe MAGAZZINO
