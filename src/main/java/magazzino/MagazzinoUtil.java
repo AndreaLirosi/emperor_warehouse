@@ -26,6 +26,13 @@ public class MagazzinoUtil {
         DbUtils.rimozione_spesa_dal_db(prodottiDaRimuovere);
         return true;
     }
+    public static boolean rimuoviProdotto() {
+        Scanner inputMenu = new Scanner(System.in);
+        System.out.print("inserisci l'ID del prodotto da eliminare: ");
+        String scelta = inputMenu.nextLine();
+        DbUtils.delete_by_id(Integer.parseInt(scelta));
+        return true;
+    }
 
     public static void stampaProdotti() {
         ArrayList<Prodotto> listaProdotti = DbUtils.mapMagazzino();
@@ -129,7 +136,7 @@ public class MagazzinoUtil {
         System.out.println("inserisci memoria");
         String scelta = inputMenu.nextLine();
         try {
-            return DbUtils.cerca_per_memoria(Double.parseDouble(scelta));
+            return DbUtils.cerca_per_memoria(scelta);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             throw new RuntimeException("Errore: Ricerca fallita");
@@ -185,6 +192,8 @@ public class MagazzinoUtil {
             throw new RuntimeException("Errore: Ricerca fallita");
         }
     }
+
+
 }
 //Aggiungere funzionalità di ricerca dei prodotti nella classe MAGAZZINO
 //(il RETURN deve essere una lista di dispositivi o un messaggio di errore per tutte le ricerche)
