@@ -15,7 +15,7 @@ public class Prodotto {
     private int id;
     private Tipo tipo;
 
-    public Prodotto(String produttore, String modello, String descrizione, double dimensione, String memoria, BigDecimal prezzoAcquisto, BigDecimal prezzoVendita, String id, Tipo tipo) {
+    public Prodotto(String produttore, String modello, String descrizione, double dimensione, String memoria, BigDecimal prezzoAcquisto, BigDecimal prezzoVendita, int id, Tipo tipo) {
         this.produttore = produttore;
         this.modello = modello;
         this.descrizione = descrizione;
@@ -23,7 +23,7 @@ public class Prodotto {
         this.memoria = memoria;
         this.prezzoAcquisto = prezzoAcquisto.setScale(2,RoundingMode.HALF_DOWN);
         this.prezzoVendita = prezzoVendita.setScale(2,RoundingMode.HALF_DOWN);
-        this.id = Integer.parseInt(id);
+        this.id = id;
         this.tipo = tipo;
 
     }

@@ -26,7 +26,7 @@ public class CarrelloUtil {
             throw new NullPointerException("Il magazzino è null");
         }
         carrello.getProdottiNelCarrello().add(prodotto);
-        MagazzinoUtil.aggiungereProdotto(magazzino,prodotto);
+        MagazzinoUtil.aggiungereProdotto(prodotto);
         return true;
     }
 
@@ -47,7 +47,7 @@ public class CarrelloUtil {
             throw new NullPointerException("Il magazzino è null");
         }
         if (carrello.getProdottiNelCarrello().contains(prodotto)) {
-            MagazzinoUtil.aggiungereProdotto(magazzino,prodotto);
+            MagazzinoUtil.aggiungereProdotto(prodotto);
             carrello.getProdottiNelCarrello().remove(prodotto);
             return true;
         }
@@ -72,7 +72,7 @@ public class CarrelloUtil {
         if (carrello == null) {
             throw new NullPointerException("Il carrello è null");
         }
-        MagazzinoUtil.rimuoviProdotti(magazzino,carrello.getProdottiNelCarrello());
+        MagazzinoUtil.rimuoviProdotti(carrello.getProdottiNelCarrello());
         return carrello.getProdottiNelCarrello();
     }
     public static BigDecimal totaleSpesaCarrello(Carrello carrello){
