@@ -141,7 +141,7 @@ public class DbUtils {
     /**
      * dato un id elimina il prodotto dal db
      */
-    private static boolean delete_by_id(int id) {
+    public static boolean delete_by_id(int id) {
         String delete_query = "DELETE FROM dbmagazzino WHERE id = " + id + " ;";
         try (Statement stmt = DbManager.drawQuery()) {
             stmt.executeQuery(delete_query);
@@ -322,8 +322,8 @@ public class DbUtils {
         }
     }
 
-    public static ArrayList<Prodotto> cerca_per_memoria(double memoria) throws SQLException {
-        String select_produttore = "SELECT * FROM dbmagazzino WHERE Memoria = '" + memoria + "' ;";
+    public static ArrayList<Prodotto> cerca_per_memoria(String memoria) throws SQLException {
+        String select_produttore = "SELECT * FROM dbmagazzino WHERE Memoria = '%" + memoria + "%' ;";
         try (Statement stmt = DbManager.drawQuery()) {
             return mappa_prodotti(stmt.executeQuery(select_produttore));
         }
