@@ -195,6 +195,12 @@ public class DbUtils {
             return mappa_prodotti(stmt.executeQuery(nome_view));
         }
     }
+    public static ArrayList<Prodotto> stampa_view_descrizione() throws SQLException {
+        String nome_view = "SELECT * FROM descrizione";
+        try (Statement stmt = DbManager.drawQuery()) {
+            return mappa_prodotti(stmt.executeQuery(nome_view));
+        }
+    }
 
     public static ArrayList<Prodotto> stampa_view_smartphone() throws SQLException {
         String nome_view = "SELECT * FROM smartphone";
