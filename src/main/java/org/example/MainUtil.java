@@ -1,31 +1,63 @@
 package org.example;
 
+import Database.DbUtils;
 import carrello.Carrello;
 import carrello.CarrelloUtil;
 import magazzino.Magazzino;
 import magazzino.MagazzinoUtil;
 import magazzino.ParametroRicerca;
+import prodotto.Prodotto;
 import prodotto.ProdottoBuilder;
+import prodotto.Tipo;
 
 import java.math.BigDecimal;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class MainUtil {
 
 
-    public static boolean addProdotto_Magazzino(Magazzino magazzino, Scanner scanner) {
-        System.out.println("aggiungi:\n1-> Tablet\n2-> Notebook\n3-> Smartphone");
-        int scelta = scanner.nextInt();
-        switch (scelta) {
-            case 1:
-                return true;
-            case 2:
-                return true;
-            case 3:
-                return true;
-            default:
-                return false;
+    public static boolean addProdotto_Magazzino(Scanner scanner) {
+        ProdottoBuilder prodottoBuilder = new ProdottoBuilder();
+
+        System.out.println("inserire Produttore");
+        scanner.nextLine();
+        prodottoBuilder.setProduttore(scanner.nextLine());
+
+
+        System.out.println("inserire Modello");
+        prodottoBuilder.setModello(scanner.nextLine());
+
+        System.out.println("inserire Descrizione");
+        prodottoBuilder.setDescrizione(scanner.nextLine());
+
+        System.out.println("inserire Dimensione");
+        prodottoBuilder.setDimensione(scanner.nextDouble());
+        scanner.nextLine();
+
+        System.out.println("inserire Memoria");
+        prodottoBuilder.setMemoria(scanner.nextLine());
+
+        System.out.println("inserire Prezzo_acquisto");
+        prodottoBuilder.setPrezzoAcquisto(scanner.nextBigDecimal());
+        scanner.nextLine();
+
+        System.out.println("inserire Prezzo_vendita");
+        prodottoBuilder.setPrezzoVendita(scanner.nextBigDecimal());
+        scanner.nextLine();
+
+        System.out.println("inserire Tipo");
+        prodottoBuilder.setTipo(Tipo.stringTipo(scanner.nextLine()));
+        try {
+
+            DbUtils.addProduct_to_db(prodottoBuilder.build());
+            System.out.println("Oggetto inserito");
+            return true;
+        } catch (SQLException e) {
+
         }
+    return false;
     }
 
     public static boolean addProdotto_Carrello(Carrello carrello, Magazzino magazzino, Scanner scanner) {
@@ -47,7 +79,7 @@ public class MainUtil {
         }
     }
 
-    public static void ricercaNelMagazzino(Magazzino magazzino) {
+    public static void ricercaNelMagazzino() {
         Scanner inputMenu = new Scanner(System.in);
         System.out.print("seleziona parametro di ricerca: \n");
 

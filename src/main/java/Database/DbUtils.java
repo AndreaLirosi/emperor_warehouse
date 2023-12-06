@@ -75,7 +75,7 @@ public class DbUtils {
                 "VALUES " +
                 "(" + produttore + "," + modello + "," + descrizione + "," + dimensione + "," + memoria + "," + prezzoAcquisto + "," + prezzoVendita + "," + tipo + ");";
         try {
-            DbManager.drawQuery().executeQuery(insertProduct);
+            DbManager.drawQuery().execute(insertProduct);
         } catch (SQLException e) {
             System.out.println("Il prodotto non è stato inserito nel db");
             e.getMessage();
@@ -92,10 +92,10 @@ public class DbUtils {
         String insertProduct = "INSERT INTO dbmagazzino " +
                 "(Produttore, Modello, Descrizione, Dimensione, Memoria, Prezzo_acquisto, Prezzo_vendita, Tipo) " +
                 "VALUES " +
-                "(" + p.getProduttore() + "," + p.getModello() + "," + p.getDescrizione() + "," + p.getDimensione() +
-                "," + p.getMemoria() + "," + p.getPrezzoAcquisto() + "," + p.getPrezzoVendita() + "," + p.getTipo() + ");";
+                "('" + p.getProduttore() + "','" + p.getModello() + "','" + p.getDescrizione() + "'," + p.getDimensione() +
+                ",'" + p.getMemoria() + "'," + p.getPrezzoAcquisto() + "," + p.getPrezzoVendita() + ",'" + p.getTipo() + "');";
         try {
-            DbManager.drawQuery().executeQuery(insertProduct);
+            DbManager.drawQuery().execute(insertProduct);
         } catch (SQLException e) {
             System.out.println("Il prodotto non è stato inserito nel db");
             e.getMessage();
@@ -144,7 +144,7 @@ public class DbUtils {
     public static boolean delete_by_id(int id) {
         String delete_query = "DELETE FROM dbmagazzino WHERE id = " + id + " ;";
         try (Statement stmt = DbManager.drawQuery()) {
-            stmt.executeQuery(delete_query);
+            stmt.execute(delete_query);
             return true;
         } catch (SQLException e) {
             throw new RuntimeException("ERRORE: Delete query ha dato un errore");
@@ -342,6 +342,7 @@ public class DbUtils {
             return mappa_prodotti(stmt.executeQuery(select_produttore));
         }
     }
+
 
 
 }
