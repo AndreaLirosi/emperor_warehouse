@@ -15,7 +15,7 @@ public class ProdottoBuilder {
     private String memoria;
     private BigDecimal prezzoAcquisto;
     private BigDecimal prezzoVendita;
-    private int id;
+    private String id;
     private Tipo tipo;
 
     public ProdottoBuilder () {
@@ -94,11 +94,11 @@ public class ProdottoBuilder {
         return this;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public ProdottoBuilder setId(int id) {
+    public ProdottoBuilder setId(String id) {
         this.id = id;
         return this;
     }
