@@ -48,7 +48,7 @@ public class DbUtils {
             ProdottoBuilder builder = new ProdottoBuilder();
 
             while (resultSet.next()) {
-                builder.setId(resultSet.getInt("id"))
+                builder.setId(resultSet.getString("id"))
                         .setProduttore(resultSet.getString("Produttore"))
                         .setModello(resultSet.getString("Modello"))
                         .setDimensione(resultSet.getInt("Dimensione"))
@@ -113,7 +113,7 @@ public class DbUtils {
         try (Statement stmt = DbManager.drawQuery()) {
             ResultSet rs = stmt.executeQuery("SELECT * FROM dbmagazzino WHERE id = " + id + " ;");
             ProdottoBuilder builder = new ProdottoBuilder();
-            builder.setId(rs.getInt("id"))
+            builder.setId(rs.getString("id"))
                     .setProduttore(rs.getString("Produttore"))
                     .setModello(rs.getString("Modello"))
                     .setDimensione(rs.getInt("Dimensione"))
@@ -159,7 +159,7 @@ public class DbUtils {
         try {
             while (resultSet.next()) {
                 ProdottoBuilder builder = new ProdottoBuilder();
-                builder.setId(resultSet.getInt("id"))
+                builder.setId(resultSet.getString("id"))
                         .setProduttore(resultSet.getString("Produttore"))
                         .setModello(resultSet.getString("Modello"))
                         .setDimensione(resultSet.getInt("Dimensione"))

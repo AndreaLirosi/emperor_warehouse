@@ -59,37 +59,37 @@ public class MainUtil {
             case 1:
                 //MagazzinoUtil.ricercaPerProduttore(magazzino, );
                 System.out.println("ricercaPerProduttore");
-                MagazzinoUtil.ricercaPerProduttore(magazzino, "Produttore");
+                MagazzinoUtil.ricercaPerProduttore();
                 break;
             case 2:
                 //MagazzinoUtil.ricercaPerModello(magazzino, );
                 System.out.println("ricercaPerModello");
-                MagazzinoUtil.ricercaPerProduttore(magazzino, "Produttore");
+
                 break;
             case 3:
                 //MagazzinoUtil.ricercaPerDimensione(magazzino, );
                 System.out.println("ricercaPerDimensione");
-                MagazzinoUtil.ricercaPerProduttore(magazzino, "Dimensione");
+
                 break;
             case 4:
                 //MagazzinoUtil.ricercaPerMemoria(magazzino, );
                 System.out.println("ricercaPerMemoria");
-                MagazzinoUtil.ricercaPerProduttore(magazzino, "Memoria");
+
                 break;
             case 5:
                 //MagazzinoUtil.ricercaPerPrezzoAcquisto(magazzino, );
                 System.out.println("ricercaPerPrezzoAcquisto");
-                MagazzinoUtil.ricercaPerProduttore(magazzino, "PrezzoAcquisto");
+
                 break;
             case 6:
                 //MagazzinoUtil.ricercaPerPrezzoVendita(magazzino, );
                 System.out.println("ricercaPerPrezzoVendita");
-                MagazzinoUtil.ricercaPerProduttore(magazzino, "PrezzoVendità");
+
                 break;
             case 7:
                 //MagazzinoUtil.ricercaPerId(magazzino, );
                 System.out.println("ricercaPerId");
-                MagazzinoUtil.ricercaPerProduttore(magazzino, "id");
+
                 break;
             case 8:
                 //MagazzinoUtil.ricercaPerId(magazzino, );

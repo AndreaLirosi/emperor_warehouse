@@ -13,8 +13,11 @@ import java.util.Scanner;
 public class MagazzinoUtil {
 
     public static boolean aggiungereProdotto(Magazzino magazzino, Prodotto prodotto) {
-
-        magazzino.getMagazzino().add(prodotto);
+        try {
+            DbUtils.addProduct_to_db(prodotto);
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
         return true;
     }
 
@@ -33,7 +36,7 @@ public class MagazzinoUtil {
 
     public static ArrayList<Prodotto> cercaProdotti(Magazzino magazzino, ParametroRicerca parametro, String ricerca) {
         return switch (parametro) {
-            case PRODUTTORE -> ricercaPerProduttore(magazzino, ricerca);
+            case PRODUTTORE -> ricercaPerProduttore();
             case MODELLO -> ricercaPerModello(magazzino, ricerca);
             case DESCRIZIONE -> ricercaPerDescrizione(magazzino, ricerca);
             case DIMENSIONE -> ricercaPerDimensione(magazzino, ricerca);
@@ -80,19 +83,21 @@ try {
         return result;
     }
 
-    public static ArrayList<Prodotto> ricercaPerProduttore(Magazzino magazzino, String ricerca) {
-        ArrayList<Prodotto> result = new ArrayList<Prodotto>();
-
-        for (Prodotto luca : magazzino.getMagazzino()) {
-            if (luca.getProduttore().equalsIgnoreCase(ricerca)) {
-                result.add(luca);
-            }
+    public static ArrayList<Prodotto> ricercaPerProduttore()  {
+        Scanner inputMenu = new Scanner(System.in);
+        System.out.println("inserisci produttore");
+        String scelta = inputMenu.nextLine();
+        try {
+            return DbUtils.cerca_per_produttore(scelta);
+        }catch (SQLException e) {
+            e.printStackTrace();
         }
-        return result;
+       return null;
     }
 
+
     public static ArrayList<Prodotto> ricercaPerModello(Magazzino magazzino, String ricerca) {
-        ArrayList<Prodotto> result = new ArrayList<Prodotto>();
+        ArrayList<Prodotto> result = DbUtils.mapMagazzino();
 
         for (Prodotto luca : magazzino.getMagazzino()) {
             if (luca.getModello().equalsIgnoreCase(ricerca)) {
@@ -103,7 +108,7 @@ try {
     }
 
     public static ArrayList<Prodotto> ricercaPerDescrizione(Magazzino magazzino, String ricerca) {
-        ArrayList<Prodotto> result = new ArrayList<Prodotto>();
+        ArrayList<Prodotto> result = DbUtils.mapMagazzino();
 
         for (Prodotto luca : magazzino.getMagazzino()) {
             if (luca.getDescrizione().equalsIgnoreCase(ricerca)) {
@@ -115,7 +120,7 @@ try {
 
     public static ArrayList<Prodotto> ricercaPerDimensione(Magazzino magazzino, String ricerca) {
 
-        ArrayList<Prodotto> result = new ArrayList<Prodotto>();
+        ArrayList<Prodotto> result = DbUtils.mapMagazzino();
 
         for (Prodotto luca : magazzino.getMagazzino()) {
             if (luca.getDimensione() == Integer.parseInt(ricerca)) {
@@ -126,7 +131,7 @@ try {
     }
 
     public static ArrayList<Prodotto> ricercaPerMemoria(Magazzino magazzino, String ricerca) {
-        ArrayList<Prodotto> result = new ArrayList<Prodotto>();
+        ArrayList<Prodotto> result = DbUtils.mapMagazzino();
 
         for (Prodotto luca : magazzino.getMagazzino()) {
             if (luca.getMemoria().equalsIgnoreCase(ricerca)) {
@@ -137,7 +142,7 @@ try {
     }
 
     public static ArrayList<Prodotto> ricercaPerPrezzoAcquisto(Magazzino magazzino, String ricerca) {
-        ArrayList<Prodotto> result = new ArrayList<Prodotto>();
+        ArrayList<Prodotto> result = DbUtils.mapMagazzino();
 
         for (Prodotto luca : magazzino.getMagazzino()) {
             if (luca.getPrezzoAcquisto().equals(BigDecimal.valueOf(Integer.parseInt(ricerca)))) {
@@ -148,7 +153,7 @@ try {
     }
 
     public static ArrayList<Prodotto> ricercaPerPrezzoVendita(Magazzino magazzino, String ricerca) {
-        ArrayList<Prodotto> result = new ArrayList<Prodotto>();
+        ArrayList<Prodotto> result = DbUtils.mapMagazzino();
 
         for (Prodotto luca : magazzino.getMagazzino()) {
             if (luca.getPrezzoVendita().equals(BigDecimal.valueOf(Integer.parseInt(ricerca)))) {
@@ -159,7 +164,7 @@ try {
     }
 
     public static ArrayList<Prodotto> ricercaPerId(Magazzino magazzino, String ricerca) {
-        ArrayList<Prodotto> result = new ArrayList<Prodotto>();
+        ArrayList<Prodotto> result = DbUtils.mapMagazzino();
 
         for (Prodotto luca : magazzino.getMagazzino()) {
             if (luca.getId()==Integer.parseInt(ricerca)) {
