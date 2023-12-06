@@ -58,43 +58,43 @@ public class MainUtil {
         switch (parametro) {
             case 1:
                 //MagazzinoUtil.ricercaPerProduttore(magazzino, );
-                System.out.println("ricercaPerProduttore");
-                MagazzinoUtil.ricercaPerProduttore();
+                System.out.println(MagazzinoUtil.ricercaPerProduttore());
+
                 break;
             case 2:
                 //MagazzinoUtil.ricercaPerModello(magazzino, );
-                System.out.println("ricercaPerModello");
+                System.out.println(MagazzinoUtil.ricercaPerModello());
 
                 break;
             case 3:
                 //MagazzinoUtil.ricercaPerDimensione(magazzino, );
-                System.out.println("ricercaPerDimensione");
+                System.out.println(MagazzinoUtil.ricercaPerDimensione());
 
                 break;
             case 4:
                 //MagazzinoUtil.ricercaPerMemoria(magazzino, );
-                System.out.println("ricercaPerMemoria");
+                System.out.println(MagazzinoUtil.ricercaPerMemoria());
 
                 break;
             case 5:
                 //MagazzinoUtil.ricercaPerPrezzoAcquisto(magazzino, );
-                System.out.println("ricercaPerPrezzoAcquisto");
+                System.out.println(MagazzinoUtil.ricercaPerPrezzoAcquisto());
 
                 break;
             case 6:
                 //MagazzinoUtil.ricercaPerPrezzoVendita(magazzino, );
-                System.out.println("ricercaPerPrezzoVendita");
+                System.out.println(MagazzinoUtil.ricercaPerPrezzoVendita());
 
                 break;
             case 7:
                 //MagazzinoUtil.ricercaPerId(magazzino, );
-                System.out.println("ricercaPerId");
+                System.out.println(MagazzinoUtil.ricercaPerId());
 
                 break;
             case 8:
                 //MagazzinoUtil.ricercaPerId(magazzino, );
-                System.out.println("cercaProdottiRangePrezzo");
-                MagazzinoUtil.cercaProdottiRangePrezzo(magazzino);
+                System.out.println(MagazzinoUtil.ricercaPerRange());
+
                 break;
 
             case 0:
