@@ -122,7 +122,7 @@ public class Menu {
                 break;
             case 3:
                 System.out.println("effettuare ricerca nel magazzino");
-                MainUtil.ricercaNelMagazzino(magazzino);
+                MainUtil.ricercaNelMagazzino();
                 break;
             case 4:
                 System.out.println("calcolo totale spesa");
@@ -150,7 +150,7 @@ public class Menu {
     }
 
     public static void menuSceltaAzienda(int scelta, Scanner inputMenu) {
-        Magazzino magazzino = new Magazzino(DbUtils.mapMagazzino());
+
         switch (scelta) {
             case 0:
                 System.out.println("Uscita dal Programma");
@@ -160,11 +160,11 @@ public class Menu {
             case 1:
                 System.out.println("aggiungi prodotto al magazzino");
                 /*MainUtil.addProdotto_Magazzino */
-                MainUtil.addProdotto_Magazzino(magazzino,inputMenu);
+                MainUtil.addProdotto_Magazzino(inputMenu);
                 break;
             case 2:
                 System.out.println("rimuovi prodotto");
-                /*MainUtil.removeProdotto_Magazzino */
+                MagazzinoUtil.rimuoviProdotto();
                 break;
             case 3:
                 System.out.println("stampa prodotti");
@@ -173,7 +173,7 @@ public class Menu {
             case 4:
                 System.out.println("effettuare ricerca nel magazzino");
                 /*MainUtil.findProdotto_Magazzino */
-                MainUtil.ricercaNelMagazzino(magazzino);
+                MainUtil.ricercaNelMagazzino();
                 break;
             default:
                 System.out.println("");
