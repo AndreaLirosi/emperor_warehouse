@@ -10,10 +10,10 @@ import java.util.ArrayList;
 
 public class CarrelloUtil {
     public static boolean addProdottoACarrello(Carrello carrello, Prodotto prodotto, Magazzino magazzino) {
-        if (prodotto == null && carrello == null && magazzino == null){
+        if (prodotto == null && carrello == null && magazzino == null) {
             throw new NullPointerException("è TUTTO ROTTO!!");
         }
-        if (prodotto == null && carrello == null || magazzino == null && carrello == null || prodotto == null && magazzino == null ){
+        if (prodotto == null && carrello == null || magazzino == null && carrello == null || prodotto == null && magazzino == null) {
             throw new NullPointerException("2 degli oggetti passati sono null");
         }
         if (prodotto == null) {
@@ -30,11 +30,11 @@ public class CarrelloUtil {
         return true;
     }
 
-    public static boolean rimuovieProdottoNelCarrello(Carrello carrello, Prodotto prodotto,Magazzino magazzino) {
-        if (prodotto == null && carrello == null && magazzino == null){
+    public static boolean rimuovieProdottoNelCarrello(Carrello carrello, Prodotto prodotto, Magazzino magazzino) {
+        if (prodotto == null && carrello == null && magazzino == null) {
             throw new NullPointerException("è TUTTO ROTTO!!");
         }
-        if (prodotto == null && carrello == null || magazzino == null && carrello == null || prodotto == null && magazzino == null ){
+        if (prodotto == null && carrello == null || magazzino == null && carrello == null || prodotto == null && magazzino == null) {
             throw new NullPointerException("2 degli oggetti passati sono null");
         }
         if (prodotto == null) {
@@ -56,14 +56,14 @@ public class CarrelloUtil {
     }
 
     public static ArrayList<Prodotto> mostraSpesaNelCarrello(Carrello carrello) {
-        if (carrello==null){
+        if (carrello == null) {
             throw new NullPointerException("Il carrello è null");
         }
         return carrello.getProdottiNelCarrello();
     }
 
     public static ArrayList<Prodotto> fineSpesaRimozioneArticoli(Carrello carrello, Magazzino magazzino) {
-        if (magazzino == null && carrello ==null) {
+        if (magazzino == null && carrello == null) {
             throw new NullPointerException("Il magazzino e carrello sono null");
         }
         if (magazzino == null) {
@@ -75,8 +75,9 @@ public class CarrelloUtil {
         MagazzinoUtil.rimuoviProdotti(carrello.getProdottiNelCarrello());
         return carrello.getProdottiNelCarrello();
     }
-    public static BigDecimal totaleSpesaCarrello(Carrello carrello){
-        if (carrello==null){
+
+    public static BigDecimal totaleSpesaCarrello(Carrello carrello) {
+        if (carrello == null) {
             throw new NullPointerException("Il carrello è null");
         }
         BigDecimal totSpesa = BigDecimal.ZERO;

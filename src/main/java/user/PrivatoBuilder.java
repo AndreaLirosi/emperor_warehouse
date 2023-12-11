@@ -12,8 +12,9 @@ public class PrivatoBuilder extends UtenteBuilder {
         this.spesa = spesa;
         return this;
     }
-    public Privato build () {
-        return new Privato(getName(),getSurname(),getEmail(),getPassword(),spesa);
+
+    public Privato build() {
+        return new Privato(getName(), getSurname(), getEmail(), getPassword(), spesa);
     }
 
 }

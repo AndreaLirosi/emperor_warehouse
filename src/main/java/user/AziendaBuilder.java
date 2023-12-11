@@ -10,7 +10,8 @@ public class AziendaBuilder extends UtenteBuilder {
         this.societyName = societyName;
         return this;
     }
-    public Azienda build () {
-        return new Azienda(getName(),getSurname(),getEmail(),getPassword(),societyName);
+
+    public Azienda build() {
+        return new Azienda(getName(), getSurname(), getEmail(), getPassword(), societyName);
     }
 }

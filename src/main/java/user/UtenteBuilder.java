@@ -28,8 +28,9 @@ public class UtenteBuilder {
         this.password = password;
         return this;
     }
-    public Utente build () {
-        return new Utente(name,surname,email,password);
+
+    public Utente build() {
+        return new Utente(name, surname, email, password);
     }
 
     public String getName() {

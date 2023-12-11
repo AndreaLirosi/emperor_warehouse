@@ -10,6 +10,7 @@ public class Magazzino {
     public Magazzino(ArrayList<Prodotto> magazzino) {
         this.magazzino = magazzino;
     }
+
     public Magazzino() {
         this.magazzino = new ArrayList<>();
     }
