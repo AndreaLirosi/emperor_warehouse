@@ -1,8 +1,5 @@
 package prodotto;
 
-import user.Utente;
-import user.UtenteBuilder;
-
 import java.math.BigDecimal;
 
 
@@ -18,8 +15,8 @@ public class ProdottoBuilder {
     private int id;
     private Tipo tipo;
 
-    public ProdottoBuilder () {
-        
+    public ProdottoBuilder() {
+
     }
 
     public Tipo getTipo() {
@@ -103,7 +100,7 @@ public class ProdottoBuilder {
         return this;
     }
 
-    public Prodotto build () {
-        return new Prodotto(produttore,modello,descrizione,dimensione,memoria,prezzoAcquisto,prezzoVendita,id,tipo);
+    public Prodotto build() {
+        return new Prodotto(produttore, modello, descrizione, dimensione, memoria, prezzoAcquisto, prezzoVendita, id, tipo);
     }
 }

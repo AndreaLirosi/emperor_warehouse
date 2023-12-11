@@ -1,26 +1,23 @@
 package org.example;
 
 import Database.DbUtils;
-import carrello.Carrello;
 import magazzino.Magazzino;
 import magazzino.MagazzinoUtil;
-import prodotto.Prodotto;
 import user.*;
-
-import java.util.ArrayList;
+import java.sql.SQLException;
 import java.util.Scanner;
 
 public class Menu {
 
 
-    public static int selezioneMenuStamp(){
-        System.out.println("clicca 1 se sei un Privato\nclicca 2 se sei un venditore");
+    public static int selezioneMenuStamp() {
+        System.out.println("clicca 1 se sei un Privato\nclicca 2 se sei un venditore\n3 se sei già registrato e vuoi loggare");
         Scanner inputMenu = new Scanner(System.in);
-        if (!inputMenu.hasNextInt()){
+        if (!inputMenu.hasNextInt()) {
             throw new RuntimeException("Mi inserisci uno dei numeri richiesti? GRAZIE");
         }
         int scelta = inputMenu.nextInt();
-        if (scelta<0 || scelta>3){
+        if (scelta < 0 || scelta > 3) {
             throw new RuntimeException("Mi inserisci uno dei numeri richiesti? GRAZIE");
         }
         return scelta;
@@ -88,7 +85,34 @@ public class Menu {
         return builder.build();
     }
 
-    public static void menuPrivato(Privato privato) {
+
+    public static void ricerca_statica_o_attiva(Utente utente, Scanner scanner)  {
+        System.out.println("Seleziona\n1 per ricercare passando un valore\n2 per cercare tramite ricerche preimpostate");
+        int scelta = scanner.nextInt();
+        try {
+            if (utente instanceof Azienda) {
+                System.out.println("Sei una azienda");
+                switch (scelta) {
+                    case 1 -> menuAzienda();
+                    case 2 -> MainUtil.ricercaStaticaAzienda();
+                    default -> throw new RuntimeException("Scelta non disponibile");
+                }
+            }else
+            if (utente instanceof Privato) {
+                System.out.println("Sei un privato");
+                switch (scelta) {
+                    case 1 -> menuPrivato();
+                    case 2 -> MainUtil.ricercaStatica_Privato();
+                    default -> throw new RuntimeException("Scelta non disponibile");
+                }
+            }
+        }catch (SQLException e){
+            System.out.println(e.getMessage());
+        }
+    }
+
+
+    public static void menuPrivato() {
 
 
         Scanner inputMenu = new Scanner(System.in);
@@ -114,7 +138,7 @@ public class Menu {
             case 1:
                 System.out.println("aggiunta elemento nel carrello");
                 /*MainUtil. addProdotto_Carrello */
-                MainUtil.addProdotto_Carrello (new Carrello(),magazzino, inputMenu);
+                //MainUtil.addProdotto_Carrello(new Carrello(), magazzino, inputMenu);
                 break;
             case 2:
                 System.out.println("eliminare elemento dal carrello");
@@ -136,17 +160,16 @@ public class Menu {
         }
     }
 
-    public static void menuAzienda(Azienda azienda) {
-
+    public static void menuAzienda() {
 
         Scanner inputMenu = new Scanner(System.in);
         int scelta;
 
         System.out.println("Selezionare operazione \n1 per aggiungere un prodotto al magazzino \n2 per rimuovere un prodotto " +
-                "\n3 per stampare i prodotti \n4 per effettuare ricerca nel magazzino " + "\n0 per uscire dal menù");
+                "\n3 per stampare i prodotti \n4 per effettuare ricerca nel magazzino " + "\n0 per uscire dal programma");
 
         scelta = inputMenu.nextInt();
-        menuSceltaAzienda(scelta,inputMenu);
+        menuSceltaAzienda(scelta, inputMenu);
     }
 
     public static void menuSceltaAzienda(int scelta, Scanner inputMenu) {
@@ -159,7 +182,7 @@ public class Menu {
                 break;
             case 1:
                 System.out.println("aggiungi prodotto al magazzino");
-                /*MainUtil.addProdotto_Magazzino */
+
                 MainUtil.addProdotto_Magazzino(inputMenu);
                 break;
             case 2:

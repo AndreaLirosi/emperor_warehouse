@@ -3,19 +3,15 @@ package user;
 import carrello.Carrello;
 import magazzino.Magazzino;
 
-public class Privato extends Utente{
+public class Privato extends Utente {
 
     private Carrello spesa;
-    private Magazzino magazzino;
-
-    public Magazzino getMagazzino() {
-        return magazzino;
-    }
 
     public Privato(String name, String surname, String email, String password, Carrello spesa) {
         super(name, surname, email, password);
         this.spesa = spesa;
     }
+
     public Privato(String name, String surname, String email, String password) {
         super(name, surname, email, password);
         this.spesa = new Carrello();
@@ -32,7 +28,7 @@ public class Privato extends Utente{
     @Override
     public String toString() {
 
-        return  super.toString()+
+        return super.toString() +
                 "Privato{" +
                 "spesa=" + spesa +
                 '}';

@@ -4,21 +4,16 @@ import prodotto.Prodotto;
 import prodotto.ProdottoBuilder;
 import prodotto.Tipo;
 import user.Azienda;
-import user.Utente;
-
 import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 public class DbUtils {
     private static String selectQuery = "SELECT * FROM dbmagazzino";
 
     public static boolean createMagazzino(Azienda utente) {
-        String create_table = "CREATE TABLE `"+utente.getSocietyName()+"` (\n" +
+        String create_table = "CREATE TABLE `" + utente.getSocietyName() + "` (\n" +
                 "  `id` int(11) PRIMARY KEY AUTO_INCREMENT,\n" +
                 "  `Produttore` varchar(30) DEFAULT NULL,\n" +
                 "  `Modello` varchar(30) DEFAULT NULL,\n" +
@@ -31,13 +26,12 @@ public class DbUtils {
                 "  PRIMARY KEY (`id`)\n" +
                 ") ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4;";
 
-            try(Statement stms = DbManager.drawQuery()) {
-                stms.execute(create_table);
-                return true;
-            }
-            catch (SQLException e){
-                throw new RuntimeException("Errore durante la creazione della tabella");
-            }
+        try (Statement stms = DbManager.drawQuery()) {
+            stms.execute(create_table);
+            return true;
+        } catch (SQLException e) {
+            throw new RuntimeException("Errore durante la creazione della tabella");
+        }
 
     }
 
@@ -195,6 +189,7 @@ public class DbUtils {
             return mappa_prodotti(stmt.executeQuery(nome_view));
         }
     }
+
     public static ArrayList<Prodotto> stampa_view_descrizione() throws SQLException {
         String nome_view = "SELECT * FROM descrizione";
         try (Statement stmt = DbManager.drawQuery()) {
@@ -342,7 +337,6 @@ public class DbUtils {
             return mappa_prodotti(stmt.executeQuery(select_produttore));
         }
     }
-
 
 
 }

@@ -1,13 +1,10 @@
 package magazzino;
 
 import Database.DbUtils;
-import org.example.Main;
 import prodotto.Prodotto;
-
 import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class MagazzinoUtil {
@@ -26,6 +23,7 @@ public class MagazzinoUtil {
         DbUtils.rimozione_spesa_dal_db(prodottiDaRimuovere);
         return true;
     }
+
     public static boolean rimuoviProdotto() {
         Scanner inputMenu = new Scanner(System.in);
         System.out.print("inserisci l'ID del prodotto da eliminare: ");
@@ -57,6 +55,7 @@ public class MagazzinoUtil {
 
         };
     }
+
     public static ArrayList<Prodotto> ricercaProdottiStatica_azienda(ParametroRicerca parametro) throws SQLException {
         return switch (parametro) {
             case PRODUTTORE -> DbUtils.stampa_view_produttore();
@@ -70,6 +69,7 @@ public class MagazzinoUtil {
             default -> throw new IllegalStateException("Errore: ricerca fallita!");
         };
     }
+
     public static ArrayList<Prodotto> ricercaProdottiStatica_spesa(ParametroRicerca parametro) throws SQLException {
         return switch (parametro) {
             case PRODUTTORE -> DbUtils.stampa_view_produttore();
