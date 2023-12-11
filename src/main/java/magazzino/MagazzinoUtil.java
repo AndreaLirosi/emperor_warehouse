@@ -1,13 +1,10 @@
 package magazzino;
 
 import Database.DbUtils;
-import org.example.Main;
 import prodotto.Prodotto;
-
 import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class MagazzinoUtil {

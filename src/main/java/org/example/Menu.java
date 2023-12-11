@@ -1,21 +1,17 @@
 package org.example;
 
 import Database.DbUtils;
-import carrello.Carrello;
 import magazzino.Magazzino;
 import magazzino.MagazzinoUtil;
-import prodotto.Prodotto;
 import user.*;
-
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Menu {
 
 
     public static int selezioneMenuStamp() {
-        System.out.println("clicca 1 se sei un Privato\nclicca 2 se sei un venditore");
+        System.out.println("clicca 1 se sei un Privato\nclicca 2 se sei un venditore\n3 se sei già registrato e vuoi loggare");
         Scanner inputMenu = new Scanner(System.in);
         if (!inputMenu.hasNextInt()) {
             throw new RuntimeException("Mi inserisci uno dei numeri richiesti? GRAZIE");
@@ -101,7 +97,7 @@ public class Menu {
                     case 2 -> MainUtil.ricercaStaticaAzienda();
                     default -> throw new RuntimeException("Scelta non disponibile");
                 }
-            }
+            }else
             if (utente instanceof Privato) {
                 System.out.println("Sei un privato");
                 switch (scelta) {
@@ -111,7 +107,6 @@ public class Menu {
                 }
             }
         }catch (SQLException e){
-            System.out.println("Origine errore da capire");
             System.out.println(e.getMessage());
         }
     }
@@ -171,7 +166,7 @@ public class Menu {
         int scelta;
 
         System.out.println("Selezionare operazione \n1 per aggiungere un prodotto al magazzino \n2 per rimuovere un prodotto " +
-                "\n3 per stampare i prodotti \n4 per effettuare ricerca nel magazzino " + "\n0 per uscire dal menù");
+                "\n3 per stampare i prodotti \n4 per effettuare ricerca nel magazzino " + "\n0 per uscire dal programma");
 
         scelta = inputMenu.nextInt();
         menuSceltaAzienda(scelta, inputMenu);

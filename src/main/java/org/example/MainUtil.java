@@ -1,18 +1,11 @@
 package org.example;
 
 import Database.DbUtils;
-import carrello.Carrello;
-import carrello.CarrelloUtil;
-import magazzino.Magazzino;
 import magazzino.MagazzinoUtil;
 import magazzino.ParametroRicerca;
-import prodotto.Prodotto;
 import prodotto.ProdottoBuilder;
 import prodotto.Tipo;
-
-import java.math.BigDecimal;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class MainUtil {
@@ -55,7 +48,7 @@ public class MainUtil {
     public static void ricercaStatica_Privato() throws SQLException {
         Scanner inputMenu = new Scanner(System.in);
         System.out.print("seleziona parametro di ricerca: \n");
-        System.out.println("premi\n" + "\n1)Produttore" + "\n2)Modello" + "\n3)Dimensione" + "\n4)Memoria" + "\n6)PrezzoVendita"  + "\n0)torna al menu");
+        System.out.println("premi\n" + "\n1)Produttore" + "\n2)Modello" + "\n3)Dimensione" + "\n4)Memoria" + "\n5)PrezzoVendita"  + "\n0)torna al menu");
         int parametro = inputMenu.nextInt();
 
         switch (parametro) {
@@ -72,8 +65,6 @@ public class MainUtil {
                 System.out.println(MagazzinoUtil.ricercaProdottiStatica_azienda(ParametroRicerca.MEMORIA));
                 break;
             case 5:
-                break;
-            case 6:
                 System.out.println(MagazzinoUtil.ricercaProdottiStatica_azienda(ParametroRicerca.PREZZOVENDITA));
                 break;
             default:
@@ -107,8 +98,8 @@ public class MainUtil {
                 System.out.println(MagazzinoUtil.ricercaProdottiStatica_azienda(ParametroRicerca.PREZZOVENDITA));
                 break;
             case 0:
-                System.out.println("Tornando al menu Azienda...");
-                break;
+                throw new RuntimeException("Tornando al menu Azienda...");
+
         }
     }
 

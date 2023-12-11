@@ -3,7 +3,6 @@ package carrello;
 import magazzino.Magazzino;
 import magazzino.MagazzinoUtil;
 import prodotto.Prodotto;
-
 import java.math.BigDecimal;
 import java.util.ArrayList;
 

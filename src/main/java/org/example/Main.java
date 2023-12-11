@@ -1,67 +1,48 @@
 package org.example;
 
-import Database.DbManager;
-import Database.DbUtils;
-import magazzino.Magazzino;
-import prodotto.Prodotto;
-import prodotto.ProdottoBuilder;
 import user.Azienda;
 import user.Privato;
 import user.Utente;
-
-import java.math.BigDecimal;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
 
     public static void main(String[] args) {
-        //Magazzino magazzino = new Magazzino(DbUtils.createMagazzino());
-
-        // System.out.println(magazzino);
-
 
         ArrayList<Utente> dbUtenti = new ArrayList<>();
-        dbUtenti.add(new Utente("g", "h", "j", "kl"));
+        dbUtenti.add(new Privato("g", "h", "j", "kl"));
         //Magazzino azienda_preimpostata_perOperazioni_utente = new Magazzino();
         boolean loginFlag = true;
         Utente utenteLog = Menu.selezioneMenu(Menu.selezioneMenuStamp());
 
-        try {
-            do {
 
-                if (utenteLog instanceof Privato || utenteLog instanceof Azienda) {
-                    Menu.ricerca_statica_o_attiva(utenteLog, new Scanner(System.in));
-                    loginFlag = false;
+        do {
 
-                } else {
-                    try {
-                        utenteLog = cercaUtente(utenteLog, dbUtenti);
-                        loginFlag = false;
-                    } catch (NullPointerException e) {
-                        System.out.println(e.getMessage());
-                        System.out.println("Ritenta il login o passa alla registrazione");
-                    }
-                    System.out.println(utenteLog);
+            if (utenteLog instanceof Privato || utenteLog instanceof Azienda) {
+                loginFlag = false;
+
+            } else {
+                try {
+                    utenteLog = cercaUtente(utenteLog, dbUtenti);
+                } catch (NullPointerException e) {
+                    System.out.println(e.getMessage());
+                    System.out.println("Ritenta il login o passa alla registrazione");
+                    utenteLog = Menu.selezioneMenu(Menu.selezioneMenuStamp());
                 }
+            }
 
-            } while (!loginFlag);
-
-            boolean flagOperazioni = true;
-            do {
-                if (utenteLog instanceof Privato) {
-
-                }
-                if (utenteLog instanceof Azienda) {
-
-                }
+        } while (loginFlag);
 
 
-            } while (!flagOperazioni);
-        }catch (Exception e){
-            e.getMessage();
-        }
+        boolean flagOperazioni = true;
+
+
+        do {
+            Menu.ricerca_statica_o_attiva(utenteLog, new Scanner(System.in));
+
+        } while (flagOperazioni);
+
     }
 
     public static Utente cercaUtente(Utente utente_da_login, ArrayList<Utente> db) {

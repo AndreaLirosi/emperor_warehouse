@@ -4,16 +4,11 @@ import prodotto.Prodotto;
 import prodotto.ProdottoBuilder;
 import prodotto.Tipo;
 import user.Azienda;
-import user.Utente;
-
 import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 public class DbUtils {
     private static String selectQuery = "SELECT * FROM dbmagazzino";
 

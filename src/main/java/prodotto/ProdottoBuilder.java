@@ -1,8 +1,5 @@
 package prodotto;
 
-import user.Utente;
-import user.UtenteBuilder;
-
 import java.math.BigDecimal;
 
 
