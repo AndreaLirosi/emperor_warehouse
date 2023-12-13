@@ -153,7 +153,7 @@ public class Menu {
                 break;
             case 5:
                 System.out.println("acquista");
-                /*MainUtil. soldCarrello */
+                MainUtil.fine_spesa(utente);
                 break;
             default:
                 System.out.println("");
