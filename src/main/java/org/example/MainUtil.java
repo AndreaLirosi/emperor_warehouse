@@ -1,10 +1,16 @@
 package org.example;
 
+import Database.DbManager;
 import Database.DbUtils;
+import carrello.CarrelloUtil;
 import magazzino.MagazzinoUtil;
 import magazzino.ParametroRicerca;
+import prodotto.Prodotto;
 import prodotto.ProdottoBuilder;
 import prodotto.Tipo;
+import user.Privato;
+import user.Utente;
+
 import java.sql.SQLException;
 import java.util.Scanner;
 
@@ -139,6 +145,35 @@ public class MainUtil {
                 break;
         }
 
+    }
+
+    public static Prodotto aggiungi_nella_spesa (Privato utente){
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("inserisci l'ID del prodotto che vuoi aggiungere al carrello: ");
+        if (scanner.hasNextInt()){
+            Prodotto p = DbUtils.mappa_prodotto(scanner.nextInt());
+            CarrelloUtil.addProdottoACarrello(utente.getSpesa(),p);
+            return p;
+        }
+        else {
+            throw new RuntimeException("Errore nell'inserimento dell'ID");
+        }
+    }
+    public static void rimuovi_prodotto_nella_spesa (Privato utente){
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("inserisci l'ID del prodotto che vuoi eliminare dal carrello: ");
+        if (scanner.hasNextInt()){
+            CarrelloUtil.rimuovieProdottoNelCarrello(utente.getSpesa(),scanner.nextInt());
+        }
+        else {
+            System.out.println("Errore nell'inserimento dell'ID");
+        }
+    }
+    public static void calcoloSpesa (Privato utente){
+        System.out.println(CarrelloUtil.totaleSpesaCarrello(utente.getSpesa()));
+    }
+    public static void fine_spesa(Privato utente){
+        DbUtils.rimozione_spesa_dal_db(utente.getSpesa().getProdottiNelCarrello());
     }
 
 }

@@ -101,7 +101,7 @@ public class Menu {
             if (utente instanceof Privato) {
                 System.out.println("Sei un privato");
                 switch (scelta) {
-                    case 1 -> menuPrivato();
+                    case 1 -> menuPrivato((Privato) utente);
                     case 2 -> MainUtil.ricercaStatica_Privato();
                     default -> throw new RuntimeException("Scelta non disponibile");
                 }
@@ -112,7 +112,7 @@ public class Menu {
     }
 
 
-    public static void menuPrivato() {
+    public static void menuPrivato(Privato utente) {
 
 
         Scanner inputMenu = new Scanner(System.in);
@@ -123,10 +123,10 @@ public class Menu {
                 "\n0 per uscire dal menù");
 
         scelta = inputMenu.nextInt();
-        menuScelta(scelta, inputMenu);
+        menuScelta(scelta, inputMenu,utente);
     }
 
-    public static void menuScelta(int scelta, Scanner inputMenu) {
+    public static void menuScelta(int scelta, Scanner inputMenu,Privato utente) {
         Magazzino magazzino = new Magazzino(DbUtils.mapMagazzino());
 
         switch (scelta) {
@@ -137,23 +137,23 @@ public class Menu {
                 break;
             case 1:
                 System.out.println("aggiunta elemento nel carrello");
-                /*MainUtil. addProdotto_Carrello */
-                //MainUtil.addProdotto_Carrello(new Carrello(), magazzino, inputMenu);
+                MainUtil.aggiungi_nella_spesa(utente);
                 break;
             case 2:
                 System.out.println("eliminare elemento dal carrello");
-                /*MainUtil. removeProdotto_Carrello */
+                    MainUtil.rimuovi_prodotto_nella_spesa(utente);
                 break;
             case 3:
                 System.out.println("effettuare ricerca nel magazzino");
                 MainUtil.ricercaNelMagazzino();
                 break;
             case 4:
-                System.out.println("calcolo totale spesa");
+                System.out.print("calcolo totale spesa: ");
+                MainUtil.calcoloSpesa(utente);
                 break;
             case 5:
                 System.out.println("acquista");
-                /*MainUtil. soldCarrello */
+                MainUtil.fine_spesa(utente);
                 break;
             default:
                 System.out.println("");

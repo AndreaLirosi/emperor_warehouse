@@ -3,7 +3,7 @@ package user;
 import carrello.Carrello;
 
 public class PrivatoBuilder extends UtenteBuilder {
-    private Carrello spesa;
+    private Carrello spesa=new Carrello();
 
     public PrivatoBuilder() {
     }
