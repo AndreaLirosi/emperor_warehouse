@@ -170,6 +170,20 @@ public class DbUtils {
 
     }
 
+    public static boolean addNewPrivato(Privato privato){
+        String insertPrivato = "INSERT INTO utenti\n" +
+                "(Cognome, Nome, email, password)\n" +
+                "VALUES('" + privato.getSurname() +"', '" + privato.getName() + "', '" + privato.getEmail() + "', '" + privato.getPassword() +"');";
+        try (Statement stmt = DbManager.drawQuery()) {
+            stmt.executeUpdate(insertPrivato);
+
+        } catch (SQLException e) {
+
+            throw new RuntimeException("errore durante la registrazione, utente non inserito");
+        }
+        return true;
+    }
+
     /**
      * dato un arrayList elimina ogni prodotto dell'arraylist dal db
      */

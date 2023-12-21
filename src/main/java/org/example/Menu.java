@@ -50,7 +50,9 @@ public class Menu {
         builder.setEmail(inputMenu.nextLine());
         System.out.print("\nInserisci password: ");
         builder.setPassword(inputMenu.nextLine());
-        return builder.build();
+        Privato privato = builder.build();
+        System.out.println(DbUtils.addNewPrivato(privato));
+        return privato;
 
     }
 
