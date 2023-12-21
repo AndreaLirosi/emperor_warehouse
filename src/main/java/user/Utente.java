@@ -1,6 +1,8 @@
 package user;
 
-public class Utente {
+import carrello.Carrello;
+
+public class Utente extends Carrello {
     private String name;
     private String surname;
     private String email;

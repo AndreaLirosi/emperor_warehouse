@@ -1,5 +1,6 @@
 package org.example;
 
+import Database.DbUtils;
 import user.Azienda;
 import user.Privato;
 import user.Utente;
@@ -10,9 +11,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        ArrayList<Utente> dbUtenti = new ArrayList<>();
-        dbUtenti.add(new Privato("g", "h", "j", "kl"));
-        //Magazzino azienda_preimpostata_perOperazioni_utente = new Magazzino();
+
         boolean loginFlag = true;
         Utente utenteLog = Menu.selezioneMenu(Menu.selezioneMenuStamp());
 
@@ -24,7 +23,12 @@ public class Main {
 
             } else {
                 try {
-                    utenteLog = cercaUtente(utenteLog, dbUtenti);
+                    utenteLog = DbUtils.mappa_Utente(utenteLog);
+                    if (utenteLog != null) {
+                        loginFlag = false;
+                    } else {
+                        throw new NullPointerException("Utente non trovato nel database");
+                    }
                 } catch (NullPointerException e) {
                     System.out.println(e.getMessage());
                     System.out.println("Ritenta il login o passa alla registrazione");

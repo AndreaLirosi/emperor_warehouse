@@ -1,6 +1,4 @@
 package org.example;
-
-import Database.DbManager;
 import Database.DbUtils;
 import carrello.CarrelloUtil;
 import magazzino.MagazzinoUtil;
@@ -9,8 +7,6 @@ import prodotto.Prodotto;
 import prodotto.ProdottoBuilder;
 import prodotto.Tipo;
 import user.Privato;
-import user.Utente;
-
 import java.sql.SQLException;
 import java.util.Scanner;
 
@@ -173,7 +169,7 @@ public class MainUtil {
         System.out.println(CarrelloUtil.totaleSpesaCarrello(utente.getSpesa()));
     }
     public static void fine_spesa(Privato utente){
-        DbUtils.rimozione_spesa_dal_db(utente.getSpesa().getProdottiNelCarrello());
+        DbUtils.rimozione_spesa_dal_db(utente);
     }
 
 }
