@@ -24,6 +24,7 @@ public class Main {
             } else {
                 try {
                     utenteLog = DbUtils.mappa_Utente(utenteLog);
+                    System.out.println(utenteLog);
                     if (utenteLog != null) {
                         loginFlag = false;
                     } else {

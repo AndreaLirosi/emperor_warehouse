@@ -3,10 +3,7 @@ package Database;
 import prodotto.Prodotto;
 import prodotto.ProdottoBuilder;
 import prodotto.Tipo;
-import user.Azienda;
-import user.Privato;
-import user.Utente;
-import user.UtenteBuilder;
+import user.*;
 
 import java.math.BigDecimal;
 import java.sql.ResultSet;
@@ -73,10 +70,11 @@ public class DbUtils {
     public static boolean addToStorico(Prodotto p, int idUtente) throws SQLException {
 
         String insertProduct = "INSERT INTO storico_magazzino " +
-                "(Produttore, Modello, Descrizione, Dimensione, Memoria, Prezzo_acquisto, Prezzo_vendita, Tipo, idUtente) " +
+                "(idProdotto, Produttore, Modello, Descrizione, Dimensione, Memoria, Prezzo_acquisto, Prezzo_vendita, Tipo, idUtente) " +
                 "VALUES " +
-                "('" + p.getProduttore() + "','" + p.getModello() + "','" + p.getDescrizione() + "'," + p.getDimensione() +
-                ",'" + p.getMemoria() + "'," + p.getPrezzoAcquisto() + "," + p.getPrezzoVendita() + ",'" + p.getTipo() + ", " + idUtente + ");";
+                "(" +p.getId()+", '"+ p.getProduttore() + "','" + p.getModello() + "','" + p.getDescrizione() + "'," + p.getDimensione() +
+                ",'" + p.getMemoria() + "'," + p.getPrezzoAcquisto() + "," + p.getPrezzoVendita() + ",'" + p.getTipo() + "', " + idUtente + ");";
+        System.out.println(insertProduct);
         try {
             DbManager.drawQuery().execute(insertProduct);
         } catch (SQLException e) {
@@ -113,7 +111,7 @@ public class DbUtils {
             ResultSet rs = stmt.executeQuery("SELECT * FROM utenti WHERE email='" + utente.getEmail() + "' AND password= '" + utente.getPassword() + "';");
 
             if (rs.next()) { // Verifica se ci sono risultati nel ResultSet
-                UtenteBuilder builder = new UtenteBuilder();
+                PrivatoBuilder builder = new PrivatoBuilder();
                 builder.setSurname(rs.getString("Cognome"))
                         .setName(rs.getString("Nome"))
                         .setEmail(rs.getString("email"))
@@ -156,14 +154,18 @@ public class DbUtils {
         }
     }
 
-    public static int searchUtente(Utente utente) {
-        String queryFindUtenti = "SELECT * FROM utenti WHERE Cognome = '" + utente.getSurname() + "' " + "AND Nome= '" + utente.getName() + "' " + "AND email= '" + utente.getEmail() + "' ;";
+    public static int searchUtente(Privato utente) {
+        String queryFindUtenti = "SELECT * FROM utenti WHERE Cognome = '" + utente.getSurname() + "' " + "AND Nome= '" + utente.getName() + "' AND email= '" + utente.getEmail() + "' ;";
+        System.out.println(queryFindUtenti);
         try (Statement stmt = DbManager.drawQuery()) {
             ResultSet rst = stmt.executeQuery(queryFindUtenti);
-            return rst.getInt("id");
+            if (rst.next()) {
+                return rst.getInt("id");
+            }
+            else throw new RuntimeException("utente non trovato");
         } catch (SQLException e) {
 
-            throw new RuntimeException("Utente non trovato");
+            throw new RuntimeException("Errore durante la ricerca dell'utente");
         }
 
     }
