@@ -120,7 +120,7 @@ public class Menu {
         int scelta;
 
         System.out.println("Selezionare operazione \n1 per aggiunta elemento nel carrello  \n2 per eliminare elemento dal carrello " +
-                "\n3 per effettuare ricerca nel magazzino  \n4 calcolo totale spesa " + "\n5 acquista" +
+                "\n3 per effettuare ricerca nel magazzino  \n4 calcolo totale spesa " + "\n5 acquista" + "\n6 vedi storico acquisti" +
                 "\n0 per uscire dal menù");
 
         scelta = inputMenu.nextInt();
@@ -155,6 +155,10 @@ public class Menu {
             case 5:
                 System.out.println("acquista");
                 MainUtil.fine_spesa(utente);
+                break;
+            case 6:
+                System.out.println("Vedi Storico");
+                System.out.println(DbUtils.mappaStorico (utente));
                 break;
             default:
                 System.out.println("");
