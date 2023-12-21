@@ -12,11 +12,6 @@ public class Privato extends Utente {
         this.spesa = spesa;
     }
 
-    public Privato(String name, String surname, String email, String password) {
-        super(name, surname, email, password);
-        this.spesa = new Carrello();
-    }
-
     public Carrello getSpesa() {
         return spesa;
     }

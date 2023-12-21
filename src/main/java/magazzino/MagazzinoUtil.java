@@ -2,6 +2,9 @@ package magazzino;
 
 import Database.DbUtils;
 import prodotto.Prodotto;
+import user.Privato;
+import user.Utente;
+
 import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -19,8 +22,8 @@ public class MagazzinoUtil {
         return true;
     }
 
-    public static boolean rimuoviProdotti(ArrayList<Prodotto> prodottiDaRimuovere) {
-        DbUtils.rimozione_spesa_dal_db(prodottiDaRimuovere);
+    public static boolean rimuoviProdotti(Privato utente) {
+        DbUtils.rimozione_spesa_dal_db(utente);
         return true;
     }
 
@@ -188,8 +191,10 @@ public class MagazzinoUtil {
         try {
             return DbUtils.mappa_prodotto(Integer.parseInt(scelta));
         } catch (RuntimeException e) {
-            System.out.println(e.getMessage());
-            throw new RuntimeException("Errore: Ricerca fallita");
+            System.out.println("Tipo di eccezione: " + e.getClass().getName());
+            System.out.println("Messaggio: " + e.getMessage());
+            e.printStackTrace();
+            throw new RuntimeException("Errore: Ricerca fallita", e);
         }
     }
 

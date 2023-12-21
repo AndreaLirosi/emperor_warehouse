@@ -4,11 +4,19 @@ import prodotto.Prodotto;
 import prodotto.ProdottoBuilder;
 import prodotto.Tipo;
 import user.Azienda;
+import user.Privato;
+import user.Utente;
+import user.UtenteBuilder;
+
 import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Scanner;
+
+import static org.example.Menu.creazionePrivato;
+
 public class DbUtils {
     private static String selectQuery = "SELECT * FROM dbmagazzino";
 
@@ -62,16 +70,17 @@ public class DbUtils {
     /**
      * Inserimento di un prodotto nel db
      */
-    public static boolean addProduct_to_db(String produttore, String modello, String descrizione, int dimensione, String memoria, BigDecimal prezzoAcquisto, BigDecimal prezzoVendita, Tipo tipo) throws SQLException {
+    public static boolean addToStorico(Prodotto p, int idUtente) throws SQLException {
 
-        String insertProduct = "INSERT INTO dbmagazzino " +
-                "(Produttore, Modello, Descrizione, Dimensione, Memoria, Prezzo_acquisto, Prezzo_vendita, Tipo) " +
+        String insertProduct = "INSERT INTO storico_magazzino " +
+                "(Produttore, Modello, Descrizione, Dimensione, Memoria, Prezzo_acquisto, Prezzo_vendita, Tipo, idUtente) " +
                 "VALUES " +
-                "(" + produttore + "," + modello + "," + descrizione + "," + dimensione + "," + memoria + "," + prezzoAcquisto + "," + prezzoVendita + "," + tipo + ");";
+                "('" + p.getProduttore() + "','" + p.getModello() + "','" + p.getDescrizione() + "'," + p.getDimensione() +
+                ",'" + p.getMemoria() + "'," + p.getPrezzoAcquisto() + "," + p.getPrezzoVendita() + ",'" + p.getTipo() + ", " + idUtente + ");";
         try {
             DbManager.drawQuery().execute(insertProduct);
         } catch (SQLException e) {
-            System.out.println("Il prodotto non è stato inserito nel db");
+            System.out.println("Il prodotto non è stato inserito nello storico");
             e.getMessage();
         }
 
@@ -98,35 +107,79 @@ public class DbUtils {
         return true;
     }
 
+    public static Utente mappa_Utente(Utente utente) {
+        try (Statement stmt = DbManager.drawQuery()) {
+
+            ResultSet rs = stmt.executeQuery("SELECT * FROM utenti WHERE email='" + utente.getEmail() + "' AND password= '" + utente.getPassword() + "';");
+
+            if (rs.next()) { // Verifica se ci sono risultati nel ResultSet
+                UtenteBuilder builder = new UtenteBuilder();
+                builder.setSurname(rs.getString("Cognome"))
+                        .setName(rs.getString("Nome"))
+                        .setEmail(rs.getString("email"))
+                        .setPassword(rs.getString("password"));
+                return builder.build();
+
+            } else throw new RuntimeException("utente non trovato");
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Si è verificato un errore durante la mappatura dell'utente", e);
+        }
+
+    }
+
 
     /**
      * ricerca tramite id e restituzione dell'oggetto mappato
      */
     public static Prodotto mappa_prodotto(int id) {
-
         try (Statement stmt = DbManager.drawQuery()) {
             ResultSet rs = stmt.executeQuery("SELECT * FROM dbmagazzino WHERE id = " + id + " ;");
-            ProdottoBuilder builder = new ProdottoBuilder();
-            builder.setId(rs.getInt("id"))
-                    .setProduttore(rs.getString("Produttore"))
-                    .setModello(rs.getString("Modello"))
-                    .setDimensione(rs.getInt("Dimensione"))
-                    .setDescrizione(rs.getString("Descrizione"))
-                    .setMemoria(rs.getString("Memoria"))
-                    .setPrezzoAcquisto(rs.getBigDecimal("Prezzo_acquisto"))
-                    .setPrezzoVendita(rs.getBigDecimal("Prezzo_vendita"))
-                    .setTipo(Tipo.stringTipo(rs.getString("Tipo")));
-            return builder.build();
+
+            if (rs.next()) { // Verifica se ci sono risultati nel ResultSet
+                ProdottoBuilder builder = new ProdottoBuilder();
+                builder.setId(rs.getInt("id"))
+                        .setProduttore(rs.getString("Produttore"))
+                        .setModello(rs.getString("Modello"))
+                        .setDimensione(rs.getInt("Dimensione"))
+                        .setDescrizione(rs.getString("Descrizione"))
+                        .setMemoria(rs.getString("Memoria"))
+                        .setPrezzoAcquisto(rs.getBigDecimal("Prezzo_acquisto"))
+                        .setPrezzoVendita(rs.getBigDecimal("Prezzo_vendita"))
+                        .setTipo(Tipo.stringTipo(rs.getString("Tipo")));
+                return builder.build();
+            } else {
+                throw new RuntimeException("Nessun risultato trovato per l'ID " + id);
+            }
         } catch (SQLException e) {
-            throw new RuntimeException("Si è verificato un errore durante la mappatura dell'oggetto");
+            throw new RuntimeException("Si è verificato un errore durante la mappatura dell'oggetto", e);
         }
+    }
+
+    public static int searchUtente(Utente utente) {
+        String queryFindUtenti = "SELECT * FROM utenti WHERE Cognome = '" + utente.getSurname() + "' " + "AND Nome= '" + utente.getName() + "' " + "AND email= '" + utente.getEmail() + "' ;";
+        try (Statement stmt = DbManager.drawQuery()) {
+            ResultSet rst = stmt.executeQuery(queryFindUtenti);
+            return rst.getInt("id");
+        } catch (SQLException e) {
+
+            throw new RuntimeException("Utente non trovato");
+        }
+
     }
 
     /**
      * dato un arrayList elimina ogni prodotto dell'arraylist dal db
      */
-    public static boolean rimozione_spesa_dal_db(ArrayList<Prodotto> spesa) {
-        for (Prodotto p : spesa) {
+    public static boolean rimozione_spesa_dal_db(Privato utente) {
+        int idUtente = searchUtente(utente);
+
+        for (Prodotto p : utente.getSpesa().getProdottiNelCarrello()) {
+            try {
+                addToStorico(p, idUtente);
+            } catch (SQLException e) {
+                throw new RuntimeException("Errore nella trasrcizione dell'oggetto");
+            }
             delete_by_id(p.getId());
         }
         return true;

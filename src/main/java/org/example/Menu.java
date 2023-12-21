@@ -38,7 +38,7 @@ public class Menu {
         }
     }
 
-    private static Privato creazionePrivato() {
+    public static Privato creazionePrivato() {
         System.out.println("crea nuovo account:");
         Scanner inputMenu = new Scanner(System.in);
         System.out.print("Inserisci Cognome: ");
@@ -76,18 +76,17 @@ public class Menu {
         UtenteBuilder builder = new UtenteBuilder();
         System.out.println("inserire dati:");
         Scanner inputMenu = new Scanner(System.in);
-        System.out.print("Inserisci Cognome: ");
-        builder.setSurname(inputMenu.nextLine());
-        System.out.print("\nInserisci nome: ");
-        builder.setName(inputMenu.nextLine());
+        System.out.print("\nInserisci email: ");
+        builder.setEmail(inputMenu.nextLine());
         System.out.print("\nInserisci password: ");
         builder.setPassword(inputMenu.nextLine());
         return builder.build();
+
     }
 
 
     public static void ricerca_statica_o_attiva(Utente utente, Scanner scanner)  {
-        System.out.println("Seleziona\n1 per ricercare passando un valore\n2 per cercare tramite ricerche preimpostate");
+        System.out.println("Seleziona\n1 per effettuare operazioni\n2 per cercare tramite ricerche preimpostate");
         int scelta = scanner.nextInt();
         try {
             if (utente instanceof Azienda) {
