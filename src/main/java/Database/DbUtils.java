@@ -64,6 +64,24 @@ public class DbUtils {
         return magazzino;
     }
 
+    public static ArrayList <Prodotto> mappaStorico (Privato utente){
+        int utenteid = searchUtente(utente);
+        ArrayList <Prodotto> storico = new ArrayList<>();
+        String mappaStorico = "SELECT Produttore, Modello,Prezzo_acquisto, Prezzo_vendita, Tipo " +
+                                " FROM storico_magazzino" +
+                                " WHERE idUtente= " + utenteid + ";";
+        try (Statement stm = DbManager.drawQuery()){
+            System.out.println(mappaStorico);
+            System.out.println();
+            storico = mappazzone(stm.executeQuery(mappaStorico));
+        } catch (SQLException e) {
+            System.out.println("Errore di connessione");
+            e.getMessage();
+        }
+        return storico;
+        //throw new RuntimeException("Errore nella mappattura dello storico");
+    }
+
     /**
      * Inserimento di un prodotto nel db
      */
@@ -406,7 +424,23 @@ public class DbUtils {
             return mappa_prodotti(stmt.executeQuery(select_produttore));
         }
     }
-
+    private static ArrayList<Prodotto> mappazzone(ResultSet resultSet) {
+        ArrayList<Prodotto> tabella_prodotti = new ArrayList<>();
+        try {
+            while (resultSet.next()) {
+                ProdottoBuilder builder = new ProdottoBuilder();
+                builder.setProduttore(resultSet.getString("Produttore"))
+                        .setModello(resultSet.getString("Modello"))
+                        .setPrezzoAcquisto(resultSet.getBigDecimal("Prezzo_acquisto"))
+                        .setPrezzoVendita(resultSet.getBigDecimal("Prezzo_vendita"))
+                        .setTipo(Tipo.stringTipo(resultSet.getString("Tipo")));
+                tabella_prodotti.add(builder.build());
+            }
+            return tabella_prodotti;
+        } catch (SQLException e) {
+            throw new RuntimeException("Si è verificato un errore durante la mappatura dell'array");
+        }
+    }
 
 }
 
